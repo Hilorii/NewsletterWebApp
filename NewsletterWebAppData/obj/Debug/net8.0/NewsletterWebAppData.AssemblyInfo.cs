@@ -10,13 +10,13 @@
 using System;
 using System.Reflection;
 
-// [assembly: System.Reflection.AssemblyCompanyAttribute("NewsletterWebAppData")]
-// [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-// // [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-// [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfa3639d1ab90b57391ec2e2fc52c09f0ea2eebf")]
-// [assembly: System.Reflection.AssemblyProductAttribute("NewsletterWebAppData")]
-// [assembly: System.Reflection.AssemblyTitleAttribute("NewsletterWebAppData")]
-// [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("NewsletterWebAppData")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9eaf9c3b2a2210445b5d59c05b0de226bfe7bfe3")]
+[assembly: System.Reflection.AssemblyProductAttribute("NewsletterWebAppData")]
+[assembly: System.Reflection.AssemblyTitleAttribute("NewsletterWebAppData")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Wygenerowane przez klasę WriteCodeFragment programu MSBuild.
 

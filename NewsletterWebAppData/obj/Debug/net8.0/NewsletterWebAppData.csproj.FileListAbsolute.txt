@@ -4,8 +4,6 @@ C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\bin\Debug\ne
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\bin\Debug\net8.0\NewsletterWebAppData.pdb
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.csproj.AssemblyReference.cache
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.AssemblyInfoInputs.cache
-C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.AssemblyInfo.cs
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.csproj.CoreCompileInputs.cache
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.sourcelink.json
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.dll

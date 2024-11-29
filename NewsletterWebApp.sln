@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsletterWebApp", "NewsletterWebApp.csproj", "{2C1E3FAD-9B75-4F9D-BF80-DFF4E7DDF982}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsletterWebAppData", "NewsletterWebAppData\NewsletterWebAppData.csproj", "{F14FF23F-1CD5-4966-952E-C8B5A0D674B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{2C1E3FAD-9B75-4F9D-BF80-DFF4E7DDF982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C1E3FAD-9B75-4F9D-BF80-DFF4E7DDF982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C1E3FAD-9B75-4F9D-BF80-DFF4E7DDF982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14FF23F-1CD5-4966-952E-C8B5A0D674B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14FF23F-1CD5-4966-952E-C8B5A0D674B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14FF23F-1CD5-4966-952E-C8B5A0D674B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14FF23F-1CD5-4966-952E-C8B5A0D674B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

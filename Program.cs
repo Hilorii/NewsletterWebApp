@@ -1,10 +1,14 @@
-using NewsletterWebAppBackend.Helpers;
+using Microsoft.EntityFrameworkCore;
+using NewsletterWebApp.Data;
+using NewsletterWebApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<DatabaseHelper>();
+// builder.Services.AddSingleton<DatabaseHelper>();
+builder.Services.AddDbContext<DataContext>(
+    o => o.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

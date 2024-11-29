@@ -175,3 +175,12 @@ C:\Users\Hilori\RiderProjects\NewsletterWebApp\obj\Debug\net8.0\refint\Newslette
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\obj\Debug\net8.0\NewsletterWebApp.pdb
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\obj\Debug\net8.0\NewsletterWebApp.genruntimeconfig.cache
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\obj\Debug\net8.0\ref\NewsletterWebApp.dll
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\NewsletterWebAppData\bin\Debug\net8.0\NewsletterWebAppData.deps.json
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\NewsletterWebAppData\bin\Debug\net8.0\NewsletterWebAppData.runtimeconfig.json
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\NewsletterWebAppData\_intermediate_\NewsletterWebAppData.csproj.nuget.dgspec.json
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\NewsletterWebAppData\_intermediate_\project.assets.json
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\NewsletterWebAppData\_intermediate_\project.packagespec.json
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\_intermediate_\NewsletterWebApp.csproj.nuget.dgspec.json
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\_intermediate_\project.assets.json
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\_intermediate_\project.packagespec.json
+C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.sourcelink.json

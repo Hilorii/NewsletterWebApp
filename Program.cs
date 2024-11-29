@@ -1,7 +1,10 @@
+using NewsletterWebAppBackend.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<DatabaseHelper>();
 
 var app = builder.Build();
 

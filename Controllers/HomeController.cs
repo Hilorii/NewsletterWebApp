@@ -20,10 +20,13 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var users = this.context.Users.Select(u => new UserViewModel
-        {
-            Email = u.Email
-        });
+        var users = this.context.Users
+            .Where(u => u.Admin == false) // Filtrowanie użytkowników, gdzie admin = 0
+            .Select(u => new UserViewModel
+            {
+                Email = u.Email
+            }).ToList(); // Dodaj ToList(), aby wymusić wykonanie zapytania
+
         return View(users);
     }
 

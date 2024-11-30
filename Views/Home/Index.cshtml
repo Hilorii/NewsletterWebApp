@@ -4,12 +4,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-@foreach (var user in Model)
-{
-    <h1>Lista użytkowników</h1>
-    <h2>@user.Email</h2>
-}
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+    <h1>Lista użytkowników</h1>
 </div>
+@foreach (var user in Model)
+{
+    <h2>@user.Email</h2>
+}

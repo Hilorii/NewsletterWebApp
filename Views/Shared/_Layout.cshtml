@@ -27,22 +27,16 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    @if (ViewBag.IsLoggedIn != null && (bool)ViewBag.IsLoggedIn)
+                    @if (Context.Session.GetInt32("UserId") != null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Wyloguj</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Wyloguj</a>
                         </li>
-                        @if (ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Admin" asp-action="SubscribersList">Panel Admina</a>
-                            </li>
-                        }
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Zaloguj</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Zaloguj</a>
                         </li>
                     }
                 </ul>

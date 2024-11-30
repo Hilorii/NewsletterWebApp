@@ -1,8 +1,15 @@
-﻿@{
+﻿@model IEnumerable<NewsletterWebApp.ViewModels.UserViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
+}
+
+@foreach (var user in Model)
+{
+    <h1>Lista użytkowników</h1>
+    <h2>@user.Email</h2>
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <a asp-action="Users" class="btn btn-primary">Overview</a>
 </div>

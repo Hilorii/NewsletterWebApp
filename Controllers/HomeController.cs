@@ -4,6 +4,7 @@ using NewsletterWebApp.Models;
 using System.Data;
 using NewsletterWebApp.Data;
 using NewsletterWebApp.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace NewsletterWebApp.Controllers;
 

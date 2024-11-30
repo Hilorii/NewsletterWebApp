@@ -26,10 +26,31 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav">
+                    @if (ViewBag.IsLoggedIn != null && (bool)ViewBag.IsLoggedIn)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Wyloguj</a>
+                        </li>
+                        @if (ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Admin" asp-action="SubscribersList">Panel Admina</a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Zaloguj</a>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </nav>
 </header>
+
 <div class="container">
     <main role="main" class="pb-3">
         @RenderBody()

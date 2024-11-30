@@ -13,6 +13,7 @@
         "packagesPath": "C:\\Users\\Hilori\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\NewsletterWebAppData\\obj\\",
         "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Hilori\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

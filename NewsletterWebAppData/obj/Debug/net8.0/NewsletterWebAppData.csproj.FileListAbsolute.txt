@@ -11,3 +11,16 @@ C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\ne
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.pdb
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.genruntimeconfig.cache
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\ref\NewsletterWebAppData.dll
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\bin\Debug\net8.0\NewsletterWebAppData.deps.json
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\bin\Debug\net8.0\NewsletterWebAppData.runtimeconfig.json
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\bin\Debug\net8.0\NewsletterWebAppData.dll
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\bin\Debug\net8.0\NewsletterWebAppData.pdb
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.csproj.AssemblyReference.cache
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.csproj.CoreCompileInputs.cache
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.sourcelink.json
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.dll
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\refint\NewsletterWebAppData.dll
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.pdb
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\NewsletterWebAppData.genruntimeconfig.cache
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\NewsletterWebAppData\obj\Debug\net8.0\ref\NewsletterWebAppData.dll

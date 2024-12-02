@@ -33,7 +33,7 @@ public class AdminController : Controller
         }
         
         var users = this.context.Users
-            .Where(u => u.Admin == false)
+            .Where(u => u.Admin == false && u.Subscribed == true)
             .Select(u => new UserViewModel
             {
                 Email = u.Email

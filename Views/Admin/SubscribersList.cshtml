@@ -2,12 +2,27 @@
 
 @{
     ViewData["Title"] = "Lista Subskrybentów";
+    int counter = 1;
+    var totalUsers = Model.Count(); // Liczba użytkowników, aby pominąć linię po ostatnim
 }
 
 <div class="text-center">
     <h2>Lista użytkowników</h2>
 </div>
-@foreach (var user in Model)
-{
-    <h2>@user.Email</h2>
-}
+
+<div class="container mt-4 p-3" style="background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 5px; box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); width: 50%;">
+    @foreach (var user in Model)
+    {
+        <div class="d-flex align-items-center mb-2">
+            <span class="me-2 fw-bold">@counter.</span> 
+            <span>@user.Email</span> 
+        </div>
+
+        @if (counter < totalUsers)
+        {
+            <hr style="border: none; height: 1px; background-color: rgba(0, 0, 0, 0.4);"> 
+        }
+
+        counter++;
+    }
+</div>

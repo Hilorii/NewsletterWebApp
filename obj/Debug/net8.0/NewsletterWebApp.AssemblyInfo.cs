@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NewsletterWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7f71302c84495082dfa6b01e741e0f0aa1f68bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4626f4488b1330ce836abe649c23affc08e256ab")]
 [assembly: System.Reflection.AssemblyProductAttribute("NewsletterWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NewsletterWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -11,7 +11,7 @@
     {
         <p class="lead">Twój e-mail: <strong>@ViewBag.Email</strong></p>
 
-        @if ((bool)ViewBag.IsAdmin == false) // Tylko dla użytkowników, którzy nie są adminami
+        @if ((bool)ViewBag.IsAdmin == false)
         {
             @if ((bool)ViewBag.IsSubscribed == true)
             {

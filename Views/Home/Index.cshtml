@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<NewsletterWebApp.ViewModels.UserViewModel>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Główna";
 }
 
 <div class="text-center">
@@ -16,11 +16,3 @@
         <p class="lead">Jesteś niezalogowany. Zaloguj się, aby zobaczyć więcej funkcji.</p>
     }
 </div>
-
-<div class="text-center">
-    <h2>Lista użytkowników</h2>
-</div>
-@foreach (var user in Model)
-{
-    <h2>@user.Email</h2>
-}

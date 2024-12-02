@@ -1,0 +1,13 @@
+@model IEnumerable<NewsletterWebApp.ViewModels.UserViewModel>
+
+@{
+    ViewData["Title"] = "Lista Subskrybentów";
+}
+
+<div class="text-center">
+    <h2>Lista użytkowników</h2>
+</div>
+@foreach (var user in Model)
+{
+    <h2>@user.Email</h2>
+}

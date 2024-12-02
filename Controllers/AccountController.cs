@@ -60,11 +60,35 @@ namespace NewsletterWebApp.Controllers
 
         // POST: Register User
         [HttpPost]
-        public IActionResult Register(string username, string password)
+        public IActionResult Register(string email, string password)
         {
-            // Logic to save the user in the database (mocked)
-            TempData["SuccessMessage"] = "Registration successful! You can now log in.";
-            return RedirectToAction("Login");
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                ViewBag.ErrorMessage = "Email i hasło są wymagane.";
+                return View();
+            }
+
+            // Sprawdzenie, czy użytkownik już istnieje
+            if (_context.Users.Any(u => u.Email == email))
+            {
+                ViewBag.ErrorMessage = "Podany email jest już zarejestrowany.";
+                return View();
+            }
+
+            // Tworzenie nowego użytkownika
+            var user = new User
+            {
+                Email = email,
+                Password = password, // W produkcji zahaszuj hasło
+                Admin = false      // Domyślnie nowi użytkownicy nie są adminami
+            };
+
+            // Zapis do bazy danych
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            // Przekierowanie do logowania
+            return RedirectToAction("Login", "Account");
         }
     }
 }

@@ -1,22 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Rejestracja";
 }
 
-<h2>Register</h2>
+<h2>Rejestracja</h2>
 
-<form method="post" action="/Account/Register">
-    <div>
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" required />
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required />
     </div>
-    <div>
-        <label for="password">Hasło:</label>
-        <input type="password" id="password" name="password" required />
+    <div class="form-group">
+        <label for="password">Hasło</label>
+        <input type="password" class="form-control" id="password" name="password" required />
     </div>
-    <button type="submit">Register</button>
+    <button type="submit" class="btn btn-primary">Zarejestruj</button>
 </form>
 
-@if (TempData["SuccessMessage"] != null)
+@if (ViewBag.ErrorMessage != null)
 {
-    <p style="color:green">@TempData["SuccessMessage"]</p>
+    <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
 }

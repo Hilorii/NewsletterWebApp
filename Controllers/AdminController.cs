@@ -9,9 +9,12 @@ using Microsoft.AspNetCore.Http;
 namespace NewsletterWebApp.Controllers;
 public class AdminController : Controller
 {
-    public AdminController(IHttpContextAccessor httpContextAccessor)
+    private readonly DataContext context;
+
+    public AdminController(IHttpContextAccessor httpContextAccessor, DataContext context)
     {
         HttpContextAccessor = httpContextAccessor;
+        this.context = context;
     }
 
     private IHttpContextAccessor HttpContextAccessor { get; }
@@ -28,8 +31,14 @@ public class AdminController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-
-        // Logika dla widoku
-        return View();
+        
+        var users = this.context.Users
+            .Where(u => u.Admin == false)
+            .Select(u => new UserViewModel
+            {
+                Email = u.Email
+            }).ToList();
+        
+        return View(users);
     }
 }

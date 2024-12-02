@@ -10,6 +10,22 @@
     @if (ViewBag.Email != null)
     {
         <p class="lead">Twój e-mail: <strong>@ViewBag.Email</strong></p>
+
+        @if ((bool)ViewBag.IsAdmin == false) // Tylko dla użytkowników, którzy nie są adminami
+        {
+            @if ((bool)ViewBag.IsSubscribed == true)
+            {
+                <form method="post" asp-action="UnsubscribeFromNewsletter">
+                    <button type="submit" class="btn btn-danger btn-lg">Wypisz się z newslettera</button>
+                </form>
+            }
+            else
+            {
+                <form method="post" asp-action="SubscribeToNewsletter">
+                    <button type="submit" class="btn btn-success btn-lg">Zapisz się do newslettera</button>
+                </form>
+            }
+        }
     }
     else
     {

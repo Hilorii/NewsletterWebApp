@@ -24,28 +24,59 @@ public class HomeController : Controller
         //POBIERANIE DANYCH DLA WIDOKU
         var email = HttpContext.Session.GetString("Email");
         
-        var users = this.context.Users
-            .Where(u => u.Admin == false)
-            .Select(u => new UserViewModel
+        if (email != null)
+        {
+            var user = context.Users.FirstOrDefault(u => u.Email == email);
+            if (user != null)
             {
-                Email = u.Email
-            }).ToList();
+                ViewBag.Email = email;
+                ViewBag.IsSubscribed = user.Subscribed;
+                ViewBag.IsAdmin = user.Admin;
+            }
+        }
         
         //WYSYŁANIE DANYCH DO WIDOKU
         ViewBag.Email = email;
         
-        return View(users);
-    }
-
-    public IActionResult Privacy()
-    {
         return View();
-    }  
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+    //PRZYCISK NA SUBA
+    [HttpPost]
+    public IActionResult SubscribeToNewsletter()
+    {
+        var email = HttpContext.Session.GetString("Email");
+
+        if (email != null)
+        {
+            var user = context.Users.FirstOrDefault(u => u.Email == email);
+            if (user != null)
+            {
+                user.Subscribed = true;
+                context.SaveChanges();
+            }
+        }
+
+        return RedirectToAction("Index");
+    }
+    //PRZYCISK NA UNSUBA
+    [HttpPost]
+    public IActionResult UnsubscribeFromNewsletter()
+    {
+        var email = HttpContext.Session.GetString("Email");
+
+        if (email != null)
+        {
+            var user = context.Users.FirstOrDefault(u => u.Email == email);
+            if (user != null)
+            {
+                user.Subscribed = false;
+                context.SaveChanges();
+            }
+        }
+
+        return RedirectToAction("Index");
+    }
+    
+    
     
 }

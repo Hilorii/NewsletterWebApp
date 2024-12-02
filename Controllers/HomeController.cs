@@ -21,13 +21,19 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        //POBIERANIE DANYCH DLA WIDOKU
+        var email = HttpContext.Session.GetString("Email");
+        
         var users = this.context.Users
-            .Where(u => u.Admin == false) // Filtrowanie użytkowników, gdzie admin = 0
+            .Where(u => u.Admin == false)
             .Select(u => new UserViewModel
             {
                 Email = u.Email
-            }).ToList(); // Dodaj ToList(), aby wymusić wykonanie zapytania
-
+            }).ToList();
+        
+        //WYSYŁANIE DANYCH DO WIDOKU
+        ViewBag.Email = email;
+        
         return View(users);
     }
 

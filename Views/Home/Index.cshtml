@@ -4,11 +4,21 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="text-center">
+    <h1 class="display-4">Witaj!</h1>
 
+    @if (ViewBag.Email != null)
+    {
+        <p class="lead">Twój e-mail: <strong>@ViewBag.Email</strong></p>
+    }
+    else
+    {
+        <p class="lead">Jesteś niezalogowany. Zaloguj się, aby zobaczyć więcej funkcji.</p>
+    }
+</div>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <h1>Lista użytkowników</h1>
+    <h2>Lista użytkowników</h2>
 </div>
 @foreach (var user in Model)
 {

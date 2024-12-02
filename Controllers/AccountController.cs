@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewsletterWebApp.Data;
-using System.Linq; // Dla LINQ
-using Microsoft.AspNetCore.Http; // Dla sesji
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace NewsletterWebApp.Controllers
 {
@@ -15,6 +15,7 @@ namespace NewsletterWebApp.Controllers
         }
 
         // GET: Login
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -30,6 +31,8 @@ namespace NewsletterWebApp.Controllers
             if (user != null)
             {
                 // Ustawienie danych w sesji
+                HttpContext.Session.SetString("IsLoggedIn", "true");
+                HttpContext.Session.SetString("Email", user.Email);
                 HttpContext.Session.SetInt32("UserId", user.Id);
                 HttpContext.Session.SetString("IsAdmin", user.Admin ? "true" : "false");
 
@@ -44,8 +47,23 @@ namespace NewsletterWebApp.Controllers
         // GET: Logout
         public IActionResult Logout()
         {
-            // Wyczyść sesję
             HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+        
+        // GET: Registration Page
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        // POST: Register User
+        [HttpPost]
+        public IActionResult Register(string username, string password)
+        {
+            // Logic to save the user in the database (mocked)
+            TempData["SuccessMessage"] = "Registration successful! You can now log in.";
             return RedirectToAction("Login");
         }
     }

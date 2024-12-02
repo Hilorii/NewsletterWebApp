@@ -19,18 +19,29 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
+                    <!-- Home is always visible -->
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
+
+                    @if (Context.Session.GetInt32("UserId") != null)
+                    {
+                        // If the user is an admin
+                        if (Context.Session.GetString("IsAdmin") == "true")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        }
+                    }
                 </ul>
                 <ul class="navbar-nav">
                     @if (Context.Session.GetInt32("UserId") != null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Wyloguj</a>
+                            <form method="post" action="/Account/Logout" class="d-inline">
+                                <button class="btn btn-link nav-link text-dark" type="submit">Wyloguj</button>
+                            </form>
                         </li>
                     }
                     else

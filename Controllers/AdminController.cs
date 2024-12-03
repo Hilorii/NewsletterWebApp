@@ -41,4 +41,18 @@ public class AdminController : Controller
         
         return View(users);
     }
+
+    [AdminOnly]
+    public IActionResult CreateNewsletter()
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        
+        //var newsletters = this.context.Newsletters;
+        object? newsletters = null;
+        
+        return View(newsletters);
+    }
 }

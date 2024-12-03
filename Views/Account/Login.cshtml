@@ -1,19 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Logowanie";
 }
 
-<h2>Login</h2>
+<h2>Logowanie</h2>
 
 <form method="post" action="/Account/Login">
-    <div>
+    <div class="form-group">
         <label for="email">Email:</label>
-        <input type="text" id="email" name="email" required />
+        <input type="text" class="form-control" id="email" name="email" required />
     </div>
-    <div>
+    <div class="form-group">
         <label for="password">Hasło:</label>
-        <input type="password" id="password" name="password" required />
+        <input type="password" class="form-control" id="password" name="password" required />
     </div>
-    <button type="submit">Login</button>
+    <button type="submit" class="btn btn-primary">Zaloguj</button>
 </form>
 
 @if (ViewBag.ErrorMessage != null)
@@ -21,4 +21,4 @@
     <p style="color:red">@ViewBag.ErrorMessage</p>
 }
 
-<p>Don't have an account? <a href="/Account/Register">Register here</a>.</p>
+<p>Nie masz konta? <a href="/Account/Register">Zarejestruj się tutaj</a>.</p>

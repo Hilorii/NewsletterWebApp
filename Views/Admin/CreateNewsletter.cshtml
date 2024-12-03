@@ -8,9 +8,9 @@
     <h2>Stwórz Newsletter</h2>
 </div>
 
-<div class="container mt-4 p-3" style="background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 5px; box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); width: 50%;">
-    <form>
-        <textarea></textarea>
-        <input type="submit" />
-    </form>
-</div>
+<form method="post" action="/Admin/CreateNewsletter">
+    <div>
+        <textarea class="form-control" id="content" style="width: 100%"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Stwórz</button>
+</form>

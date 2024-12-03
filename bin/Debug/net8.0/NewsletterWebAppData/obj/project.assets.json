@@ -4807,11 +4807,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
+      "projectUniqueName": "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
       "projectName": "NewsletterWebAppData",
-      "projectPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
+      "projectPath": "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
       "packagesPath": "C:\\Users\\uzytkownik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\obj\\",
+      "outputPath": "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\NewsletterWebAppData\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4842,7 +4842,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
       "SdkAnalysisLevel": "9.0.100"
     },
@@ -4887,7 +4887,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

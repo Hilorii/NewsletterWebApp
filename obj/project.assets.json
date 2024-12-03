@@ -4491,11 +4491,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebApp.csproj",
+      "projectUniqueName": "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\NewsletterWebApp.csproj",
       "projectName": "NewsletterWebApp",
-      "projectPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebApp.csproj",
+      "projectPath": "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\NewsletterWebApp.csproj",
       "packagesPath": "C:\\Users\\uzytkownik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\obj\\",
+      "outputPath": "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4516,8 +4516,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj": {
-              "projectPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj"
+            "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj": {
+              "projectPath": "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj"
             }
           }
         }
@@ -4530,7 +4530,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
       "SdkAnalysisLevel": "9.0.100"
     },
@@ -4572,7 +4572,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

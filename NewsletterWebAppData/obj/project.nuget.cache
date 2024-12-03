@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QoUKg2e/eNY=",
+  "dgSpecHash": "K40FDC6/Hqc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
+  "projectFilePath": "C:\\Users\\uzytkownik\\source\\repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\uzytkownik\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\uzytkownik\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

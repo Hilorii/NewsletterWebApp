@@ -4,6 +4,8 @@
     ViewData["Title"] = "Stwórz Newsletter";
 }
 
+<script src="/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
 <div class="text-center">
     <h2>Stwórz Newsletter</h2>
 </div>
@@ -14,3 +16,9 @@
     </div>
     <button type="submit" class="btn btn-primary">Stwórz</button>
 </form>
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+    });
+</script>

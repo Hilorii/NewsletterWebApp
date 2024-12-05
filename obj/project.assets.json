@@ -1516,6 +1516,12 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "TinyMCE/7.5.1": {
+        "type": "package",
+        "build": {
+          "build/TinyMCE.targets": {}
+        }
+      },
       "NewsletterWebAppData/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -4470,6 +4476,196 @@
         "version.txt"
       ]
     },
+    "TinyMCE/7.5.1": {
+      "sha512": "MDpRkSZTJC3kmF0ktTlZuLC9XGalsmdHM+NGYrVpu9WvURpxgNcQNX2u+VYc0C4hCbstCg7lSpbGC6Ec6OZReQ==",
+      "type": "package",
+      "path": "tinymce/7.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/TinyMCE.targets",
+        "content/scripts/tinymce/icons/default/icons.js",
+        "content/scripts/tinymce/icons/default/icons.min.js",
+        "content/scripts/tinymce/langs/README.md",
+        "content/scripts/tinymce/license.md",
+        "content/scripts/tinymce/models/dom/model.js",
+        "content/scripts/tinymce/models/dom/model.min.js",
+        "content/scripts/tinymce/plugins/accordion/plugin.js",
+        "content/scripts/tinymce/plugins/accordion/plugin.min.js",
+        "content/scripts/tinymce/plugins/advlist/plugin.js",
+        "content/scripts/tinymce/plugins/advlist/plugin.min.js",
+        "content/scripts/tinymce/plugins/anchor/plugin.js",
+        "content/scripts/tinymce/plugins/anchor/plugin.min.js",
+        "content/scripts/tinymce/plugins/autolink/plugin.js",
+        "content/scripts/tinymce/plugins/autolink/plugin.min.js",
+        "content/scripts/tinymce/plugins/autoresize/plugin.js",
+        "content/scripts/tinymce/plugins/autoresize/plugin.min.js",
+        "content/scripts/tinymce/plugins/autosave/plugin.js",
+        "content/scripts/tinymce/plugins/autosave/plugin.min.js",
+        "content/scripts/tinymce/plugins/charmap/plugin.js",
+        "content/scripts/tinymce/plugins/charmap/plugin.min.js",
+        "content/scripts/tinymce/plugins/code/plugin.js",
+        "content/scripts/tinymce/plugins/code/plugin.min.js",
+        "content/scripts/tinymce/plugins/codesample/plugin.js",
+        "content/scripts/tinymce/plugins/codesample/plugin.min.js",
+        "content/scripts/tinymce/plugins/directionality/plugin.js",
+        "content/scripts/tinymce/plugins/directionality/plugin.min.js",
+        "content/scripts/tinymce/plugins/emoticons/js/emojiimages.js",
+        "content/scripts/tinymce/plugins/emoticons/js/emojiimages.min.js",
+        "content/scripts/tinymce/plugins/emoticons/js/emojis.js",
+        "content/scripts/tinymce/plugins/emoticons/js/emojis.min.js",
+        "content/scripts/tinymce/plugins/emoticons/plugin.js",
+        "content/scripts/tinymce/plugins/emoticons/plugin.min.js",
+        "content/scripts/tinymce/plugins/fullscreen/plugin.js",
+        "content/scripts/tinymce/plugins/fullscreen/plugin.min.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/ar.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/bg_BG.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/ca.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/cs.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/da.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/de.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/el.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/en.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/es.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/eu.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/fa.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/fi.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/fr_FR.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/he_IL.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/hi.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/hr.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/hu_HU.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/id.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/it.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/ja.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/kk.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/ko_KR.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/ms.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/nb_NO.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/nl.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/pl.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/pt_BR.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/pt_PT.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/ro.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/ru.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/sk.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/sl_SI.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/sv_SE.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/th_TH.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/tr.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/uk.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/vi.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/zh_CN.js",
+        "content/scripts/tinymce/plugins/help/js/i18n/keynav/zh_TW.js",
+        "content/scripts/tinymce/plugins/help/plugin.js",
+        "content/scripts/tinymce/plugins/help/plugin.min.js",
+        "content/scripts/tinymce/plugins/image/plugin.js",
+        "content/scripts/tinymce/plugins/image/plugin.min.js",
+        "content/scripts/tinymce/plugins/importcss/plugin.js",
+        "content/scripts/tinymce/plugins/importcss/plugin.min.js",
+        "content/scripts/tinymce/plugins/insertdatetime/plugin.js",
+        "content/scripts/tinymce/plugins/insertdatetime/plugin.min.js",
+        "content/scripts/tinymce/plugins/link/plugin.js",
+        "content/scripts/tinymce/plugins/link/plugin.min.js",
+        "content/scripts/tinymce/plugins/lists/plugin.js",
+        "content/scripts/tinymce/plugins/lists/plugin.min.js",
+        "content/scripts/tinymce/plugins/media/plugin.js",
+        "content/scripts/tinymce/plugins/media/plugin.min.js",
+        "content/scripts/tinymce/plugins/nonbreaking/plugin.js",
+        "content/scripts/tinymce/plugins/nonbreaking/plugin.min.js",
+        "content/scripts/tinymce/plugins/pagebreak/plugin.js",
+        "content/scripts/tinymce/plugins/pagebreak/plugin.min.js",
+        "content/scripts/tinymce/plugins/preview/plugin.js",
+        "content/scripts/tinymce/plugins/preview/plugin.min.js",
+        "content/scripts/tinymce/plugins/quickbars/plugin.js",
+        "content/scripts/tinymce/plugins/quickbars/plugin.min.js",
+        "content/scripts/tinymce/plugins/save/plugin.js",
+        "content/scripts/tinymce/plugins/save/plugin.min.js",
+        "content/scripts/tinymce/plugins/searchreplace/plugin.js",
+        "content/scripts/tinymce/plugins/searchreplace/plugin.min.js",
+        "content/scripts/tinymce/plugins/table/plugin.js",
+        "content/scripts/tinymce/plugins/table/plugin.min.js",
+        "content/scripts/tinymce/plugins/visualblocks/plugin.js",
+        "content/scripts/tinymce/plugins/visualblocks/plugin.min.js",
+        "content/scripts/tinymce/plugins/visualchars/plugin.js",
+        "content/scripts/tinymce/plugins/visualchars/plugin.min.js",
+        "content/scripts/tinymce/plugins/wordcount/plugin.js",
+        "content/scripts/tinymce/plugins/wordcount/plugin.min.js",
+        "content/scripts/tinymce/skins/content/dark/content.css",
+        "content/scripts/tinymce/skins/content/dark/content.js",
+        "content/scripts/tinymce/skins/content/dark/content.min.css",
+        "content/scripts/tinymce/skins/content/default/content.css",
+        "content/scripts/tinymce/skins/content/default/content.js",
+        "content/scripts/tinymce/skins/content/default/content.min.css",
+        "content/scripts/tinymce/skins/content/document/content.css",
+        "content/scripts/tinymce/skins/content/document/content.js",
+        "content/scripts/tinymce/skins/content/document/content.min.css",
+        "content/scripts/tinymce/skins/content/tinymce-5-dark/content.css",
+        "content/scripts/tinymce/skins/content/tinymce-5-dark/content.js",
+        "content/scripts/tinymce/skins/content/tinymce-5-dark/content.min.css",
+        "content/scripts/tinymce/skins/content/tinymce-5/content.css",
+        "content/scripts/tinymce/skins/content/tinymce-5/content.js",
+        "content/scripts/tinymce/skins/content/tinymce-5/content.min.css",
+        "content/scripts/tinymce/skins/content/writer/content.css",
+        "content/scripts/tinymce/skins/content/writer/content.js",
+        "content/scripts/tinymce/skins/content/writer/content.min.css",
+        "content/scripts/tinymce/skins/ui/oxide-dark/content.css",
+        "content/scripts/tinymce/skins/ui/oxide-dark/content.inline.css",
+        "content/scripts/tinymce/skins/ui/oxide-dark/content.inline.js",
+        "content/scripts/tinymce/skins/ui/oxide-dark/content.inline.min.css",
+        "content/scripts/tinymce/skins/ui/oxide-dark/content.js",
+        "content/scripts/tinymce/skins/ui/oxide-dark/content.min.css",
+        "content/scripts/tinymce/skins/ui/oxide-dark/skin.css",
+        "content/scripts/tinymce/skins/ui/oxide-dark/skin.js",
+        "content/scripts/tinymce/skins/ui/oxide-dark/skin.min.css",
+        "content/scripts/tinymce/skins/ui/oxide-dark/skin.shadowdom.css",
+        "content/scripts/tinymce/skins/ui/oxide-dark/skin.shadowdom.js",
+        "content/scripts/tinymce/skins/ui/oxide-dark/skin.shadowdom.min.css",
+        "content/scripts/tinymce/skins/ui/oxide/content.css",
+        "content/scripts/tinymce/skins/ui/oxide/content.inline.css",
+        "content/scripts/tinymce/skins/ui/oxide/content.inline.js",
+        "content/scripts/tinymce/skins/ui/oxide/content.inline.min.css",
+        "content/scripts/tinymce/skins/ui/oxide/content.js",
+        "content/scripts/tinymce/skins/ui/oxide/content.min.css",
+        "content/scripts/tinymce/skins/ui/oxide/skin.css",
+        "content/scripts/tinymce/skins/ui/oxide/skin.js",
+        "content/scripts/tinymce/skins/ui/oxide/skin.min.css",
+        "content/scripts/tinymce/skins/ui/oxide/skin.shadowdom.css",
+        "content/scripts/tinymce/skins/ui/oxide/skin.shadowdom.js",
+        "content/scripts/tinymce/skins/ui/oxide/skin.shadowdom.min.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/content.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/content.inline.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/content.inline.js",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/content.inline.min.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/content.js",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/content.min.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/skin.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/skin.js",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/skin.min.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.js",
+        "content/scripts/tinymce/skins/ui/tinymce-5-dark/skin.shadowdom.min.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5/content.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5/content.inline.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5/content.inline.js",
+        "content/scripts/tinymce/skins/ui/tinymce-5/content.inline.min.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5/content.js",
+        "content/scripts/tinymce/skins/ui/tinymce-5/content.min.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5/skin.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5/skin.js",
+        "content/scripts/tinymce/skins/ui/tinymce-5/skin.min.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5/skin.shadowdom.css",
+        "content/scripts/tinymce/skins/ui/tinymce-5/skin.shadowdom.js",
+        "content/scripts/tinymce/skins/ui/tinymce-5/skin.shadowdom.min.css",
+        "content/scripts/tinymce/themes/silver/theme.js",
+        "content/scripts/tinymce/themes/silver/theme.min.js",
+        "content/scripts/tinymce/tinymce.d.ts",
+        "content/scripts/tinymce/tinymce.js",
+        "content/scripts/tinymce/tinymce.min.js",
+        "tinymce.7.5.1.nupkg.sha512",
+        "tinymce.nuspec"
+      ]
+    },
     "NewsletterWebAppData/1.0.0": {
       "type": "project",
       "path": "NewsletterWebAppData/NewsletterWebAppData.csproj",
@@ -4481,24 +4677,29 @@
       "Microsoft.Data.SqlClient >= 5.2.2",
       "Microsoft.EntityFrameworkCore >= 9.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.0",
-      "NewsletterWebAppData >= 1.0.0"
+      "NewsletterWebAppData >= 1.0.0",
+      "TinyMCE >= 7.5.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hilori\\.nuget\\packages\\": {}
+    "C:\\Users\\uzytkownik\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\NewsletterWebApp.csproj",
+      "projectUniqueName": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebApp.csproj",
       "projectName": "NewsletterWebApp",
-      "projectPath": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\NewsletterWebApp.csproj",
-      "packagesPath": "C:\\Users\\Hilori\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\obj\\",
+      "projectPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebApp.csproj",
+      "packagesPath": "C:\\Users\\uzytkownik\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\obj\\",
       "projectStyle": "PackageReference",
-      "UsingMicrosoftNETSdk": false,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Hilori\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\uzytkownik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4506,15 +4707,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj": {
-              "projectPath": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj"
+            "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj": {
+              "projectPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj"
             }
           }
         }
@@ -4528,7 +4728,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -4547,6 +4748,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[9.0.0, )"
+          },
+          "TinyMCE": {
+            "target": "Package",
+            "version": "[7.5.1, )"
           }
         },
         "imports": [
@@ -4568,7 +4773,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

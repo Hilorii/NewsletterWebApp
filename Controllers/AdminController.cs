@@ -49,10 +49,7 @@ public class AdminController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-        
-        //var newsletters = this.context.Newsletters;
-        object? newsletters = null;
-        
-        return View(newsletters);
+              
+        return View();
     }
 }

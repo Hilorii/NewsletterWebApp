@@ -66,7 +66,7 @@ public class AdminController : Controller
         {
             Title = title,
             Content = content,
-            ImageUrl = imageUrl ?? "",
+            ImageUrl = imageUrl,
             IsNewsletter = true
         };
 

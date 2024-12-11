@@ -33,7 +33,7 @@ public class AdminController : Controller
         }
         
         var users = _context.Users
-            .Where(u => u.Admin == false && u.Subscribed == true)
+            .Where(u => !u.Admin && u.Subscribed)
             .Select(u => new UserViewModel
             {
                 Email = u.Email
@@ -51,6 +51,24 @@ public class AdminController : Controller
         }
               
         return View();
+    }
+
+    [AdminOnly]
+    public IActionResult NewslettersList()
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        
+        var newsletters = _context.Emails
+            .Where(n => n.IsNewsletter)
+            .Select(n => new NewsletterViewModel
+            {
+                Title = n.Title
+            }).ToList();
+        
+        return View(newsletters);
     }
 
     [AdminOnly]

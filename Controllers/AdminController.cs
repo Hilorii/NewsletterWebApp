@@ -54,6 +54,25 @@ public class AdminController : Controller
     }
 
     [AdminOnly]
+    public IActionResult SentEmails()
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+
+        var emails = _context.EmailLogs
+            .Join(_context.Emails, el => el.EmailId, e => e.Id, (el, e) => new EmailViewModel
+            {
+                Title = e.Title,
+                SentAt = el.SentAt
+            }).ToList();
+        
+        return View(emails);
+    }
+
+    [AdminOnly]
     public IActionResult NewslettersList()
     {
         if (!IsAdmin())

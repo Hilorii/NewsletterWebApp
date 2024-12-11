@@ -48,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2VuZEVtYWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/SentEmails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2VudEVtYWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/SubscribersList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU3Vic2NyaWJlcnNMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

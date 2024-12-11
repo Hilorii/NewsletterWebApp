@@ -43,6 +43,17 @@ public class AdminController : Controller
     }
 
     [AdminOnly]
+    public IActionResult SendEmail()
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+              
+        return View();
+    }
+
+    [AdminOnly]
     public IActionResult CreateNewsletter()
     {
         if (!IsAdmin())
@@ -55,7 +66,7 @@ public class AdminController : Controller
 
     [AdminOnly]
     [HttpPost]
-    public IActionResult CreateNewsletter(string title, string content, string imageUrl)
+    public IActionResult CreateNewsletter(string title, string content, string? imageUrl)
     {
         if (!IsAdmin())
         {

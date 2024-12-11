@@ -1,14 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Stwórz Newsletter";
+    ViewData["Title"] = "Wyślij Maila";
 }
 
 <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 
 <div class="text-center">
-    <h2>Stwórz Newsletter</h2>
+    <h2>Wyślij Maila</h2>
 </div>
 
-<form method="post" action="/Admin/CreateNewsletter">
+<form method="post" action="/Admin/SendEmail">
     <div>
         <label for="title">Tytuł:</label>
         <input type="text" class="form-control" id="title" name="title" />
@@ -16,11 +16,7 @@
     <div>
         <textarea class="form-control" id="content" name="content" style="width: 100%"></textarea>
     </div>
-    <div>
-        <label for="imageUrl">Obrazek:</label>
-        <input type="file" class="form-control" id="imageUrl" name="imageUrl" />
-    </div>
-    <button type="submit" class="btn btn-primary">Stwórz</button>
+    <button type="submit" class="btn btn-primary" onclick="alert('w budowie'); return false">Wyślij</button>
 </form>
 
 <script>

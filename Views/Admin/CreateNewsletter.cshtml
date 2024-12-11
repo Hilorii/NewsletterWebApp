@@ -12,15 +12,15 @@
 
 <form method="post" action="/Admin/CreateNewsletter">
     <div>
-        Tytuł:
-        <input type="text" class="form-control" id="title" name="title">
+        <label for="title">Tytuł:</label>
+        <input type="text" class="form-control" id="title" name="title" />
     </div>
     <div>
         <textarea class="form-control" id="content" name="content" style="width: 100%"></textarea>
     </div>
     <div>
-        Obrazek:
-        <input type="file" class="form-control" id="image-url" name="image-url">
+        <label for="imageUrl">Obrazek:</label>
+        <input type="file" class="form-control" id="imageUrl" name="imageUrl" />
     </div>
     <button type="submit" class="btn btn-primary">Stwórz</button>
 </form>

@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Http;
 namespace NewsletterWebApp.Controllers;
 public class AdminController : Controller
 {
-    private readonly DataContext context;
+    private readonly DataContext _context;
 
     public AdminController(IHttpContextAccessor httpContextAccessor, DataContext context)
     {
         HttpContextAccessor = httpContextAccessor;
-        this.context = context;
+        _context = context;
     }
 
     private IHttpContextAccessor HttpContextAccessor { get; }
@@ -32,7 +32,7 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Account");
         }
         
-        var users = this.context.Users
+        var users = _context.Users
             .Where(u => u.Admin == false && u.Subscribed == true)
             .Select(u => new UserViewModel
             {
@@ -50,6 +50,29 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Account");
         }
               
+        return View();
+    }
+
+    [AdminOnly]
+    [HttpPost]
+    public IActionResult CreateNewsletter(string title, string content, string imageUrl)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var email = new Email
+        {
+            Title = title,
+            Content = content,
+            ImageUrl = imageUrl ?? "",
+            IsNewsletter = true
+        };
+
+        _context.Emails.Add(email);
+        _context.SaveChanges();
+
         return View();
     }
 }

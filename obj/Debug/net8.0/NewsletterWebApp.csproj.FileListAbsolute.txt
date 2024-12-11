@@ -367,10 +367,10 @@ C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\staticwebasse
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.NewsletterWebApp.props
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.NewsletterWebApp.props
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\Newslett.D71ABC6B.Up2Date
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\NewsletterWebApp.dll
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\refint\NewsletterWebApp.dll
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\NewsletterWebApp.pdb
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\NewsletterWebApp.genruntimeconfig.cache
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\ref\NewsletterWebApp.dll
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

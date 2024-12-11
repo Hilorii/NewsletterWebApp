@@ -15,7 +15,7 @@
 
     public class Click
     {
-        public int Id { get; set; } 
+        public int Id { get; set; } // Klucz główny
         public int EmailLogId { get; set; } // Klucze obce
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
@@ -25,7 +25,7 @@
 
     public class EmailLogUser
     {
-        public int Id { get; set; } 
+        public int Id { get; set; } // Klucz główny
         public int EmailLogId { get; set; }
         public int UserId { get; set; }
 
@@ -36,7 +36,7 @@
 
     public class EmailLog
     {
-        public int Id { get; set; } 
+        public int Id { get; set; } // Klucz główny
         public int EmailId { get; set; }
         public DateTime SentAt { get; set; } = DateTime.UtcNow;
 
@@ -48,7 +48,7 @@
 
     public class Email
     {
-        public int Id { get; set; }
+        public int Id { get; set; } // Klucz główny
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

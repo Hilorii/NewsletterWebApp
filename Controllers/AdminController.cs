@@ -1,13 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using NewsletterWebApp.Models;
 using NewsletterWebApp.Data;
 using NewsletterWebApp.ViewModels;
-using Microsoft.AspNetCore.Http;
-using MimeKit;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using System.Linq;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace NewsletterWebApp.Controllers;
 public class AdminController : Controller
@@ -28,20 +29,107 @@ public class AdminController : Controller
     }
 
     [AdminOnly]
+    [HttpPost]
+    public async Task<IActionResult> SendEmail(string title, string content)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var users = _context.Users
+            .Where(u => !u.Admin && u.Subscribed)
+            .ToList();
+
+        var email = new Email
+        {
+            Title = title,
+            Content = content
+        };
+        _context.Emails.Add(email);
+        _context.SaveChanges();
+
+        var emailLog = new EmailLog
+        {
+            EmailId = email.Id
+        };
+        _context.EmailLogs.Add(emailLog);
+        _context.SaveChanges();
+
+        foreach (var user in users)
+        {
+            var emailLogUser = new EmailLogUser
+            {
+                EmailLogId = emailLog.Id,
+                UserId = user.Id
+            };
+            _context.EmailLogUsers.Add(emailLogUser);
+        }
+        _context.SaveChanges();
+
+        await SendEmailsToUsersWithSendGridAsync(title, content, emailLog.Id, users);
+
+        return RedirectToAction("SentEmails", "Admin");
+    }
+
+    private async Task SendEmailsToUsersWithSendGridAsync(string title, string content, int emailLogId, IEnumerable<User> users)
+    {
+        var apiKey = "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";
+        var client = new SendGridClient(apiKey);
+        var from = new EmailAddress("hilori.furan@wp.pl", "MailGrid");
+
+        foreach (var user in users)
+        {
+            var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
+            var htmlContent = $"{content}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>";
+
+            var to = new EmailAddress(user.Email);
+            var msg = MailHelper.CreateSingleEmail(from, to, title, content, htmlContent);
+
+            await client.SendEmailAsync(msg);
+        }
+    }
+
+    private string GenerateEmailContent(string content, int emailLogId)
+    {
+        var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
+        return $"{content}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>";
+    }
+
+    [HttpGet]
+    public IActionResult TrackClick(int logId)
+    {
+        var emailLog = _context.EmailLogs.Find(logId);
+        if (emailLog == null)
+        {
+            return NotFound();
+        }
+
+        var click = new Click
+        {
+            EmailLogId = logId
+        };
+        _context.Clicks.Add(click);
+        _context.SaveChanges();
+
+        return Redirect("/");
+    }
+
+    [AdminOnly]
     public IActionResult SubscribersList()
     {
         if (!IsAdmin())
         {
             return RedirectToAction("Login", "Account");
         }
-        
+
         var users = _context.Users
             .Where(u => !u.Admin && u.Subscribed)
             .Select(u => new UserViewModel
             {
                 Email = u.Email
             }).ToList();
-        
+
         return View(users);
     }
 
@@ -59,71 +147,8 @@ public class AdminController : Controller
             {
                 Email = u.Email
             }).ToList();
-              
+
         return View(users);
-    }
-
-    [AdminOnly]
-    [HttpPost]
-    public IActionResult SendEmail(string[] emailAddresses, string title, string content)
-    {
-        if (!IsAdmin())
-        {
-            return RedirectToAction("Login", "Account");
-        }
-
-        // TODO: obsłużyć faktyczne wysłanie wiadomości
-
-        var email = new Email
-        {
-            Title = title,
-            Content = content
-        };
-        _context.Emails.Add(email);
-        _context.SaveChanges(); // konieczne zapisanie od razu w celu uzyskania ID e-maila
-
-        var emailLog = new EmailLog
-        {
-            EmailId = email.Id
-        };
-        _context.EmailLogs.Add(emailLog);
-        _context.SaveChanges();
-
-        foreach (var emailAddress in emailAddresses)
-        {
-            var emailLogUser = new EmailLogUser
-            {
-                EmailLogId = emailLog.Id,
-                UserId = _context.Users.Single(u => u.Email == emailAddress).Id
-            };
-            _context.EmailLogUsers.Add(emailLogUser);
-        }
-        _context.SaveChanges();
-
-        /* // kod niewymagający wielokrotnego zapisywania danych w bazie (obecnie nie działa)
-        var email = new Email
-        {
-            Title = title,
-            Content = content
-        };
-        _context.Emails.Add(email);
-
-        var emailLog = new EmailLog();
-        email.EmailLogs.Add(emailLog);
-
-        foreach (var emailAddress in emailAddresses)
-        {
-            var emailLogUser = new EmailLogUser
-            {
-                UserId = _context.Users.Single(u => u.Email == emailAddress).Id
-            };
-            emailLog.EmailLogUsers.Add(emailLogUser);
-        }
-
-        _context.SaveChanges();
-        */
-
-        return RedirectToAction("SendEmail", "Admin");
     }
 
     [AdminOnly]
@@ -140,26 +165,8 @@ public class AdminController : Controller
                 Title = e.Title,
                 SentAt = el.SentAt
             }).ToList();
-        
-        return View(emails);
-    }
 
-    [AdminOnly]
-    public IActionResult NewslettersList()
-    {
-        if (!IsAdmin())
-        {
-            return RedirectToAction("Login", "Account");
-        }
-        
-        var newsletters = _context.Emails
-            .Where(n => n.IsNewsletter)
-            .Select(n => new NewsletterViewModel
-            {
-                Title = n.Title
-            }).ToList();
-        
-        return View(newsletters);
+        return View(emails);
     }
 
     [AdminOnly]
@@ -169,7 +176,7 @@ public class AdminController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-              
+
         return View();
     }
 

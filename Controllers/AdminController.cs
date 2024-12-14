@@ -62,28 +62,63 @@ public class AdminController : Controller
 
     [AdminOnly]
     [HttpPost]
-    public IActionResult SendEmail(string[] users, string title, string content)
+    public IActionResult SendEmail(string[] emailAddresses, string title, string content)
     {
         if (!IsAdmin())
         {
             return RedirectToAction("Login", "Account");
         }
 
+        // TODO: obsłużyć faktyczne wysłanie wiadomości
+
         var email = new Email
         {
             Title = title,
             Content = content
         };
-
         _context.Emails.Add(email);
-        //_context.SaveChanges();
+        _context.SaveChanges(); // konieczne zapisanie od razu w celu uzyskania ID e-maila
 
-        foreach (var user in users)
+        var emailLog = new EmailLog
         {
-            Console.WriteLine(user);
+            EmailId = email.Id
+        };
+        _context.EmailLogs.Add(emailLog);
+        _context.SaveChanges();
+
+        foreach (var emailAddress in emailAddresses)
+        {
+            var emailLogUser = new EmailLogUser
+            {
+                EmailLogId = emailLog.Id,
+                UserId = _context.Users.Single(u => u.Email == emailAddress).Id
+            };
+            _context.EmailLogUsers.Add(emailLogUser);
         }
-        Console.WriteLine(title);
-        Console.WriteLine(content);
+        _context.SaveChanges();
+
+        /* // kod niewymagający wielokrotnego zapisywania danych w bazie (obecnie nie działa)
+        var email = new Email
+        {
+            Title = title,
+            Content = content
+        };
+        _context.Emails.Add(email);
+
+        var emailLog = new EmailLog();
+        email.EmailLogs.Add(emailLog);
+
+        foreach (var emailAddress in emailAddresses)
+        {
+            var emailLogUser = new EmailLogUser
+            {
+                UserId = _context.Users.Single(u => u.Email == emailAddress).Id
+            };
+            emailLog.EmailLogUsers.Add(emailLogUser);
+        }
+
+        _context.SaveChanges();
+        */
 
         return RedirectToAction("SendEmail", "Admin");
     }
@@ -151,7 +186,6 @@ public class AdminController : Controller
             ImageUrl = imageUrl,
             IsNewsletter = true
         };
-
         _context.Emails.Add(email);
         _context.SaveChanges();
 

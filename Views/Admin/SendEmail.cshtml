@@ -18,7 +18,7 @@
         @foreach (var user in Model)
         {
             <br />
-            <input type="checkbox" id="user@(counter)" name="users[]" value="@user.Email" />
+            <input type="checkbox" id="user@(counter)" name="emailAddresses[]" value="@user.Email" />
             <label for="user@(counter)">@user.Email</label>
 
             counter++;
@@ -31,7 +31,7 @@
     <div>
         <textarea class="form-control" id="content" name="content" style="width: 100%"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary" onclick="return confirm('w budowie, czy na pewno?')">Wyślij</button>
+    <button type="submit" class="btn btn-primary">Wyślij</button>
 </form>
 
 <script>

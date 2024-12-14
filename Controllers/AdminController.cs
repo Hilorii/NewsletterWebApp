@@ -49,8 +49,43 @@ public class AdminController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
+
+        var users = _context.Users
+            .Where(u => !u.Admin)
+            .Select(u => new UserViewModel
+            {
+                Email = u.Email
+            }).ToList();
               
-        return View();
+        return View(users);
+    }
+
+    [AdminOnly]
+    [HttpPost]
+    public IActionResult SendEmail(string[] users, string title, string content)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var email = new Email
+        {
+            Title = title,
+            Content = content
+        };
+
+        _context.Emails.Add(email);
+        //_context.SaveChanges();
+
+        foreach (var user in users)
+        {
+            Console.WriteLine(user);
+        }
+        Console.WriteLine(title);
+        Console.WriteLine(content);
+
+        return RedirectToAction("SendEmail", "Admin");
     }
 
     [AdminOnly]
@@ -60,7 +95,6 @@ public class AdminController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-
 
         var emails = _context.EmailLogs
             .Join(_context.Emails, el => el.EmailId, e => e.Id, (el, e) => new EmailViewModel
@@ -121,6 +155,6 @@ public class AdminController : Controller
         _context.Emails.Add(email);
         _context.SaveChanges();
 
-        return View();
+        return RedirectToAction("CreateNewsletter", "Admin");
     }
 }

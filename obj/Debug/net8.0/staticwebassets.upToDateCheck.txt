@@ -1,5 +1,4 @@
 wwwroot\css\site.css
-wwwroot\favicon.ico
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
@@ -236,3 +235,5 @@ wwwroot\lib\tinymce\themes\silver\theme.min.js
 wwwroot\lib\tinymce\tinymce.d.ts
 wwwroot\lib\tinymce\tinymce.js
 wwwroot\lib\tinymce\tinymce.min.js
+wwwroot\logo.ico
+wwwroot\logo2.ico

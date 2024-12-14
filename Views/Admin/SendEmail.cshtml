@@ -1,5 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Wyślij Maila";
+﻿@model IEnumerable<NewsletterWebApp.ViewModels.UserViewModel>
+
+@{
+    ViewData["Title"] = "Lista Subskrybentów";
+    int counter = 1;
+    var totalUsers = Model.Count();
 }
 
 <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
@@ -10,13 +14,24 @@
 
 <form method="post" action="/Admin/SendEmail">
     <div>
+        Do:
+        @foreach (var user in Model)
+        {
+            <br />
+            <input type="checkbox" id="user@(counter)" name="users[]" value="@user.Email" />
+            <label for="user@(counter)">@user.Email</label>
+
+            counter++;
+        }
+    </div>
+    <div>
         <label for="title">Tytuł:</label>
         <input type="text" class="form-control" id="title" name="title" />
     </div>
     <div>
         <textarea class="form-control" id="content" name="content" style="width: 100%"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary" onclick="alert('w budowie'); return false">Wyślij</button>
+    <button type="submit" class="btn btn-primary" onclick="return confirm('w budowie, czy na pewno?')">Wyślij</button>
 </form>
 
 <script>

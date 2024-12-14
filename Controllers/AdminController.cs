@@ -1,10 +1,13 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using NewsletterWebApp.Models;
-using System.Data;
 using NewsletterWebApp.Data;
 using NewsletterWebApp.ViewModels;
 using Microsoft.AspNetCore.Http;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using System.Linq;
 
 namespace NewsletterWebApp.Controllers;
 public class AdminController : Controller

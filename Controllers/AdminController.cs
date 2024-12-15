@@ -14,11 +14,13 @@ namespace NewsletterWebApp.Controllers;
 public class AdminController : Controller
 {
     private readonly DataContext _context;
+    private readonly ILogger<AdminController> _logger;
 
-    public AdminController(IHttpContextAccessor httpContextAccessor, DataContext context)
+    public AdminController(IHttpContextAccessor httpContextAccessor, DataContext context, ILogger<AdminController> logger)
     {
         HttpContextAccessor = httpContextAccessor;
         _context = context;
+        _logger = logger;
     }
 
     private IHttpContextAccessor HttpContextAccessor { get; }
@@ -35,6 +37,12 @@ public class AdminController : Controller
         if (!IsAdmin())
         {
             return RedirectToAction("Login", "Account");
+        }
+
+        if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
+        {
+            ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
+            return View();
         }
 
         var users = _context.Users
@@ -67,7 +75,15 @@ public class AdminController : Controller
         }
         _context.SaveChanges();
 
-        await SendEmailsToUsersWithSendGridAsync(title, content, emailLog.Id, users);
+        try
+        {
+            await SendEmailsToUsersWithSendGridAsync(title, content, emailLog.Id, users);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Błąd podczas wysyłania wiadomości e-mail.");
+            return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
+        }
 
         return RedirectToAction("SentEmails", "Admin");
     }
@@ -78,22 +94,25 @@ public class AdminController : Controller
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("hilori.furan@wp.pl", "MailGrid");
 
-        foreach (var user in users)
+        var tasks = users.Select(async user =>
         {
-            var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
-            var htmlContent = $"{content}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>";
+            try
+            {
+                var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
+                var htmlContent = $"{content}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>";
 
-            var to = new EmailAddress(user.Email);
-            var msg = MailHelper.CreateSingleEmail(from, to, title, content, htmlContent);
+                var to = new EmailAddress(user.Email);
+                var msg = MailHelper.CreateSingleEmail(from, to, title, content, htmlContent);
 
-            await client.SendEmailAsync(msg);
-        }
-    }
+                await client.SendEmailAsync(msg);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Błąd wysyłania e-maila do {user.Email}");
+            }
+        });
 
-    private string GenerateEmailContent(string content, int emailLogId)
-    {
-        var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
-        return $"{content}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>";
+        await Task.WhenAll(tasks);
     }
 
     [HttpGet]
@@ -187,6 +206,12 @@ public class AdminController : Controller
         if (!IsAdmin())
         {
             return RedirectToAction("Login", "Account");
+        }
+
+        if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
+        {
+            ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
+            return View();
         }
 
         var email = new Email

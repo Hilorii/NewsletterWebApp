@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Wysłane Maile";
     int counter = 1;
-    var totalNewsletters = Model.Count();
 }
 
 <div class="text-center">
@@ -15,10 +14,15 @@
     {
         <div class="d-flex align-items-center mb-2">
             <span class="me-2 fw-bold">@counter.</span>
-            <span>@email.Title</span>
+            <div>
+                <div><strong>Tytuł:</strong> @email.Title</div>
+                <div><strong>Wysłano:</strong> @email.SentAt.ToString("yyyy-MM-dd HH:mm")</div>
+                <div><strong>Otworzenia:</strong> @email.TotalOpens</div>
+                <div><strong>Kliknięcia:</strong> @email.TotalClicks</div>
+            </div>
         </div>
 
-        @if (counter < totalNewsletters)
+        @if (counter < Model.Count())
         {
             <hr style="border: none; height: 1px; background-color: rgba(0, 0, 0, 0.4);">
         }

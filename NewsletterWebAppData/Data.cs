@@ -22,6 +22,15 @@
         // Relacje
         public EmailLog EmailLog { get; set; }
     }
+    public class EmailOpen
+    {
+        public int Id { get; set; } // Klucz główny
+        public int EmailLogId { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        // Relacje
+        public EmailLog EmailLog { get; set; }
+    }
 
     public class EmailLogUser
     {
@@ -55,6 +64,8 @@
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public string? ImageUrl { get; set; }
         public bool IsNewsletter { get; set; } = false;
+        public int TotalClicks { get; set; } = 0;
+        public int TotalOpens { get; set; } = 0;
 
         // Relacje
         public ICollection<EmailLog> EmailLogs { get; set; } // Jeden email może być logowany wiele razy

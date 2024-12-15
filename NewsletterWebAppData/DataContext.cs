@@ -44,6 +44,7 @@ namespace NewsletterWebApp.Data
         public DbSet<EmailLogUser> EmailLogUsers { get; set; }
         public DbSet<EmailLog> EmailLogs { get; set; }
         public DbSet<Email> Emails { get; set; }
+        public DbSet<EmailOpen> EmailOpens { get; set; }
 
     }
 }

@@ -92,14 +92,25 @@ public class AdminController : Controller
     {
         var apiKey = "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";
         var client = new SendGridClient(apiKey);
-        var from = new EmailAddress("hilori.furan@wp.pl", "MailGrid");
+        var from = new EmailAddress("hilori.furan@wp.pl", "MailCraft");
 
         var tasks = users.Select(async user =>
         {
             try
             {
-                var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
-                var htmlContent = $"{content}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>";
+                // Do śledzenia kliknięć
+                var trackingClickUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
+
+                // Do śledzenia otwarć
+                var trackingOpenUrl = Url.Action("TrackOpen", "Admin", new { logId = emailLogId }, Request.Scheme);
+
+                // Treść maila z śledzącymi linkami
+                var htmlContent = $@"
+                {content}
+                <br><br>
+                <a href=""{trackingClickUrl}"">Kliknij tutaj</a>
+                <br>
+                <img src=""{trackingOpenUrl}"" alt="""" style=""display:none;"">";
 
                 var to = new EmailAddress(user.Email);
                 var msg = MailHelper.CreateSingleEmail(from, to, title, content, htmlContent);
@@ -113,6 +124,28 @@ public class AdminController : Controller
         });
 
         await Task.WhenAll(tasks);
+    }
+
+    
+    [HttpGet]
+    public IActionResult TrackOpen(int logId)
+    {
+        var emailLog = _context.EmailLogs.Find(logId);
+        if (emailLog == null)
+        {
+            return NotFound();
+        }
+
+        var emailOpen = new EmailOpen
+        {
+            EmailLogId = logId,
+            CreatedAt = DateTime.UtcNow
+        };
+        _context.EmailOpens.Add(emailOpen);
+        _context.SaveChanges();
+
+        // Zwraca pusty obrazek 1x1 jako odpowiedź (tracking pixel)
+        return File(new byte[0], "image/gif");
     }
 
     [HttpGet]
@@ -178,11 +211,19 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        var emails = _context.EmailLogs
-            .Join(_context.Emails, el => el.EmailId, e => e.Id, (el, e) => new EmailViewModel
+        var emails = _context.Emails
+            .Select(e => new EmailViewModel
             {
                 Title = e.Title,
-                SentAt = el.SentAt
+                SentAt = e.EmailLogs
+                    .OrderByDescending(el => el.SentAt)
+                    .FirstOrDefault().SentAt,
+                TotalClicks = e.EmailLogs
+                    .SelectMany(el => el.Clicks)
+                    .Count(),
+                TotalOpens = e.EmailLogs
+                    .SelectMany(el => _context.EmailOpens.Where(op => op.EmailLogId == el.Id))
+                    .Count()
             }).ToList();
 
         return View(emails);

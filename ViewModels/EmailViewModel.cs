@@ -4,5 +4,7 @@
     {
         public string Title { get; set; }
         public DateTime SentAt { get; set; }
+        public int TotalClicks { get; set; }
+        public int TotalOpens { get; set; }
     }
 }

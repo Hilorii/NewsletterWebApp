@@ -68,6 +68,12 @@ namespace NewsletterWebApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("TotalClicks")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalOpens")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -118,6 +124,27 @@ namespace NewsletterWebApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("EmailLogUsers");
+                });
+
+            modelBuilder.Entity("NewsletterWebApp.Data.EmailOpen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("EmailLogId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmailLogId");
+
+                    b.ToTable("EmailOpens");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.User", b =>
@@ -189,6 +216,17 @@ namespace NewsletterWebApp.Migrations
                     b.Navigation("EmailLog");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NewsletterWebApp.Data.EmailOpen", b =>
+                {
+                    b.HasOne("NewsletterWebApp.Data.EmailLog", "EmailLog")
+                        .WithMany()
+                        .HasForeignKey("EmailLogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EmailLog");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.Email", b =>

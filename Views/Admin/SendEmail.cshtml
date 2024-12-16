@@ -14,18 +14,6 @@
 
 <form method="post" action="/Admin/SendEmail">
     <div class="mb-3">
-        <h4>Do:</h4>
-        @foreach (var user in Model)
-        {
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="user@(counter)" name="emailAddresses[]" value="@user.Email" />
-                <label class="form-check-label" for="user@(counter)">@user.Email</label>
-            </div>
-            counter++;
-        }
-    </div>
-
-    <div class="mb-3">
         <label for="title" class="form-label">Tytuł:</label>
         <input type="text" class="form-control" id="title" name="title" placeholder="Podaj tytuł wiadomości" />
     </div>
@@ -42,6 +30,11 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Wyślij</button>
+
+    <div class="mb-3">
+        <label for="scheduledAt" class="form-label">Zaplanowany czas wysyłki (opcjonalne):</label>
+        <input type="datetime-local" class="form-control" id="scheduledAt" name="scheduledAt" />
+    </div>
 </form>
 
 <script>

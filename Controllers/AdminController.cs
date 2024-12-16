@@ -32,7 +32,7 @@ public class AdminController : Controller
 
     [AdminOnly]
     [HttpPost]
-    public async Task<IActionResult> SendEmail(string title, string content)
+    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt)
     {
         if (!IsAdmin())
         {
@@ -45,48 +45,37 @@ public class AdminController : Controller
             return View();
         }
 
-        var users = _context.Users
-            .Where(u => !u.Admin && u.Subscribed)
-            .ToList();
-
         var email = new Email
         {
             Title = title,
-            Content = content
+            Content = content,
+            ScheduledAt = scheduledAt // Zapisz datę zaplanowanej wysyłki
         };
+
         _context.Emails.Add(email);
         _context.SaveChanges();
 
-        var emailLog = new EmailLog
+        if (!scheduledAt.HasValue || scheduledAt <= DateTime.UtcNow)
         {
-            EmailId = email.Id
-        };
-        _context.EmailLogs.Add(emailLog);
-        _context.SaveChanges();
+            // Wyślij e-mail natychmiast
+            var users = _context.Users
+                .Where(u => !u.Admin && u.Subscribed)
+                .ToList();
 
-        foreach (var user in users)
-        {
-            var emailLogUser = new EmailLogUser
+            try
             {
-                EmailLogId = emailLog.Id,
-                UserId = user.Id
-            };
-            _context.EmailLogUsers.Add(emailLogUser);
-        }
-        _context.SaveChanges();
-
-        try
-        {
-            await SendEmailsToUsersWithSendGridAsync(title, content, emailLog.Id, users);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Błąd podczas wysyłania wiadomości e-mail.");
-            return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
+                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Błąd podczas wysyłania wiadomości e-mail.");
+                return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
+            }
         }
 
         return RedirectToAction("SentEmails", "Admin");
     }
+
     
     
     //TEMPLATE DLA MAILI 
@@ -177,6 +166,34 @@ public class AdminController : Controller
         _context.SaveChanges();
 
         return Redirect("/");
+    }
+    
+    //Wysyłanie maili zaplanowanych
+    public async Task SendScheduledEmails()
+    {
+        var emailsToSend = _context.Emails
+            .Where(e => e.ScheduledAt.HasValue && e.ScheduledAt <= DateTime.UtcNow)
+            .ToList();
+
+        foreach (var email in emailsToSend)
+        {
+            var users = _context.Users
+                .Where(u => !u.Admin && u.Subscribed)
+                .ToList();
+
+            try
+            {
+                await SendEmailsToUsersWithSendGridAsync(email.Title, email.Content, email.Id, users);
+                email.ScheduledAt = null;
+                _context.Emails.Update(email);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Błąd podczas wysyłania zaplanowanego e-maila.");
+            }
+        }
+
+        _context.SaveChanges();
     }
 
     [AdminOnly]

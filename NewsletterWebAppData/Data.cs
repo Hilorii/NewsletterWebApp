@@ -55,19 +55,20 @@
         public ICollection<EmailLogUser> EmailLogUsers { get; set; } // Jeden log może być przypisany do wielu użytkowników
     }
 
-    public class Email
-    {
-        public int Id { get; set; } // Klucz główny
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public string? ImageUrl { get; set; }
-        public bool IsNewsletter { get; set; } = false;
-        public int TotalClicks { get; set; } = 0;
-        public int TotalOpens { get; set; } = 0;
+public class Email
+{
+    public int Id { get; set; } // Klucz główny
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? ScheduledAt { get; set; }
+    public string? ImageUrl { get; set; }
+    public bool IsNewsletter { get; set; } = false;
+    public int TotalClicks { get; set; } = 0;
+    public int TotalOpens { get; set; } = 0;
 
-        // Relacje
-        public ICollection<EmailLog> EmailLogs { get; set; } // Jeden email może być logowany wiele razy
-    }
+    // Relacje
+    public ICollection<EmailLog> EmailLogs { get; set; } // Jeden email może być logowany wiele razy
+}
 }

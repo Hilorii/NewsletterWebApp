@@ -64,6 +64,9 @@ namespace NewsletterWebApp.Migrations
                     b.Property<bool>("IsNewsletter")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime?>("ScheduledAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");

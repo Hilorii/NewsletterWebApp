@@ -87,6 +87,14 @@ public class AdminController : Controller
 
         return RedirectToAction("SentEmails", "Admin");
     }
+    
+    
+    //TEMPLATE DLA MAILI 
+    private string ProcessTemplate(string template, User user)
+    {
+        return template
+            .Replace("{{Email}}", user.Email);
+    }
 
     private async Task SendEmailsToUsersWithSendGridAsync(string title, string content, int emailLogId, IEnumerable<User> users)
     {
@@ -98,22 +106,23 @@ public class AdminController : Controller
         {
             try
             {
-                // Do śledzenia kliknięć
-                var trackingClickUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
+                // Przetwórz tytuł i treść z dynamicznymi zmiennymi
+                var personalizedTitle = ProcessTemplate(title, user);
+                var personalizedContent = ProcessTemplate(content, user);
 
-                // Do śledzenia otwarć
-                var trackingOpenUrl = Url.Action("TrackOpen", "Admin", new { logId = emailLogId }, Request.Scheme);
+                // Link śledzący kliknięcia
+                var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
 
-                // Treść maila z śledzącymi linkami
-                var htmlContent = $@"
-                {content}
-                <br><br>
-                <a href=""{trackingClickUrl}"">Kliknij tutaj</a>
-                <br>
-                <img src=""{trackingOpenUrl}"" alt="""" style=""display:none;"">";
+                // Link do piksela śledzącego otwarcia
+                var pixelUrl = Url.Action("TrackOpen", "Admin", new { logId = emailLogId }, Request.Scheme);
 
+                // Dodaj piksel do treści wiadomości
+                var htmlContent = $"{personalizedContent}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>" +
+                                  $"<img src=\"{pixelUrl}\" alt=\"\" style=\"display:none;\" />";
+
+                // Wyślij email
                 var to = new EmailAddress(user.Email);
-                var msg = MailHelper.CreateSingleEmail(from, to, title, content, htmlContent);
+                var msg = MailHelper.CreateSingleEmail(from, to, personalizedTitle, personalizedContent, htmlContent);
 
                 await client.SendEmailAsync(msg);
             }
@@ -126,6 +135,8 @@ public class AdminController : Controller
         await Task.WhenAll(tasks);
     }
 
+
+
     
     [HttpGet]
     public IActionResult TrackOpen(int logId)
@@ -136,17 +147,18 @@ public class AdminController : Controller
             return NotFound();
         }
 
-        var emailOpen = new EmailOpen
+        var open = new EmailOpen
         {
             EmailLogId = logId,
             CreatedAt = DateTime.UtcNow
         };
-        _context.EmailOpens.Add(emailOpen);
+        _context.EmailOpens.Add(open);
         _context.SaveChanges();
 
-        // Zwraca pusty obrazek 1x1 jako odpowiedź (tracking pixel)
+        // Zwróć pusty obraz
         return File(new byte[0], "image/gif");
     }
+
 
     [HttpGet]
     public IActionResult TrackClick(int logId)

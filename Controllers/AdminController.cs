@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using NewsletterWebApp.Models;
 using NewsletterWebApp.Data;
 using NewsletterWebApp.ViewModels;
@@ -29,8 +30,7 @@ public class AdminController : Controller
     {
         return HttpContextAccessor.HttpContext.Session.GetString("IsAdmin") == "true";
     }
-
-    [AdminOnly]
+    
     [HttpPost]
     public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt)
     {
@@ -49,7 +49,7 @@ public class AdminController : Controller
         {
             Title = title,
             Content = content,
-            ScheduledAt = scheduledAt // Zapisz datę zaplanowanej wysyłki
+            ScheduledAt = scheduledAt ?? DateTime.UtcNow // Ustaw domyślną wartość, jeśli null
         };
 
         _context.Emails.Add(email);
@@ -57,7 +57,6 @@ public class AdminController : Controller
 
         if (!scheduledAt.HasValue || scheduledAt <= DateTime.UtcNow)
         {
-            // Wyślij e-mail natychmiast
             var users = _context.Users
                 .Where(u => !u.Admin && u.Subscribed)
                 .ToList();
@@ -75,6 +74,7 @@ public class AdminController : Controller
 
         return RedirectToAction("SentEmails", "Admin");
     }
+
 
     
     
@@ -172,7 +172,7 @@ public class AdminController : Controller
     public async Task SendScheduledEmails()
     {
         var emailsToSend = _context.Emails
-            .Where(e => e.ScheduledAt.HasValue && e.ScheduledAt <= DateTime.UtcNow)
+            .Where(e => e.ScheduledAt != null && e.ScheduledAt <= DateTime.UtcNow)
             .ToList();
 
         foreach (var email in emailsToSend)
@@ -241,19 +241,24 @@ public class AdminController : Controller
         }
 
         var emails = _context.Emails
+            .Include(e => e.EmailLogs)
+            .ThenInclude(el => el.Clicks)
+            .ToList()
             .Select(e => new EmailViewModel
             {
-                Title = e.Title,
-                SentAt = e.EmailLogs
+                Title = e.Title ?? "Brak tytułu",
+                SentAt = e.EmailLogs?
                     .OrderByDescending(el => el.SentAt)
-                    .FirstOrDefault().SentAt,
-                TotalClicks = e.EmailLogs
+                    .FirstOrDefault()?.SentAt ?? DateTime.MinValue,
+                TotalClicks = e.EmailLogs?
                     .SelectMany(el => el.Clicks)
-                    .Count(),
-                TotalOpens = e.EmailLogs
+                    .Count() ?? 0,
+                TotalOpens = e.EmailLogs?
                     .SelectMany(el => _context.EmailOpens.Where(op => op.EmailLogId == el.Id))
-                    .Count()
-            }).ToList();
+                    .Count() ?? 0
+            })
+            .ToList();
+
 
         return View(emails);
     }

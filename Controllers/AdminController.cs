@@ -171,30 +171,45 @@ public class AdminController : Controller
     //Wysyłanie maili zaplanowanych
     public async Task SendScheduledEmails()
     {
+        // Pobierz e-maile do wysłania
         var emailsToSend = _context.Emails
-            .Where(e => e.ScheduledAt != null && e.ScheduledAt <= DateTime.UtcNow)
+            .Where(e => e.ScheduledAt.HasValue && e.ScheduledAt.Value.ToUniversalTime() <= DateTime.UtcNow)
+            .ToList();
+
+        // Pobierz listę użytkowników
+        var users = _context.Users
+            .Where(u => !u.Admin && u.Subscribed)
             .ToList();
 
         foreach (var email in emailsToSend)
         {
-            var users = _context.Users
-                .Where(u => !u.Admin && u.Subscribed)
-                .ToList();
-
             try
             {
+                // Wyślij zaplanowane e-maile
                 await SendEmailsToUsersWithSendGridAsync(email.Title, email.Content, email.Id, users);
+
+                // Resetowanie daty zaplanowanej
                 email.ScheduledAt = null;
                 _context.Emails.Update(email);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Błąd podczas wysyłania zaplanowanego e-maila.");
+                _logger.LogError(ex, $"Błąd podczas wysyłania zaplanowanego e-maila: {email.Title}, ID: {email.Id}");
             }
         }
 
-        _context.SaveChanges();
+        try
+        {
+            // Zapisz zmiany w bazie danych
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Błąd podczas zapisywania zmian w bazie danych.");
+        }
     }
+
+
 
     [AdminOnly]
     public IActionResult SubscribersList()

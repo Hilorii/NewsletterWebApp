@@ -1,6 +1,5 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace NewsletterWebApp.Data
 {
@@ -14,10 +13,8 @@ namespace NewsletterWebApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseSerialColumns();
-            
-            base.OnModelCreating(modelBuilder);
 
-            // Konfiguracja relacji pomiędzy encjami
+            // Relationships configuration
             modelBuilder.Entity<EmailLogUser>()
                 .HasOne(e => e.EmailLog)
                 .WithMany(el => el.EmailLogUsers)
@@ -37,14 +34,36 @@ namespace NewsletterWebApp.Data
                 .HasOne(el => el.Email)
                 .WithMany(e => e.EmailLogs)
                 .HasForeignKey(el => el.EmailId);
-            
+
+            // Apply DateTime as UTC for all entities
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var properties = entityType.ClrType.GetProperties()
+                    .Where(p => p.PropertyType == typeof(DateTime) || p.PropertyType == typeof(DateTime?));
+
+                foreach (var property in properties)
+                {
+                    var isNullable = property.PropertyType == typeof(DateTime?);
+                    var converter = new ValueConverter<DateTime, DateTime>(
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc), // To database
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc)); // From database
+
+                    modelBuilder.Entity(entityType.ClrType)
+                        .Property(property.Name)
+                        .HasConversion(converter)
+                        .IsRequired(!isNullable); // If not nullable, set as required
+                }
+            }
+
+            base.OnModelCreating(modelBuilder);
         }
+
+
         public DbSet<User> Users { get; set; }
         public DbSet<Click> Clicks { get; set; }
         public DbSet<EmailLogUser> EmailLogUsers { get; set; }
         public DbSet<EmailLog> EmailLogs { get; set; }
         public DbSet<Email> Emails { get; set; }
         public DbSet<EmailOpen> EmailOpens { get; set; }
-
     }
 }

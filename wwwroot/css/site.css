@@ -19,4 +19,23 @@ html {
 
 body {
   margin-bottom: 60px;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(45deg, #FFD09B,#FFD09B, #73eaea, #3468C0, #3468C0);
+  background-size: 300% 300%;
+  animation: gradient-animation 8s ease infinite;
 }
+
+/* Kluczowe klatki animacji gradientu */
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+

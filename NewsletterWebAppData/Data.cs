@@ -67,6 +67,7 @@ public class Email
     public bool IsNewsletter { get; set; } = false;
     public int TotalClicks { get; set; } = 0;
     public int TotalOpens { get; set; } = 0;
+    public bool IsSent { get; set; }
 
     // Relacje
     public ICollection<EmailLog> EmailLogs { get; set; } // Jeden email może być logowany wiele razy

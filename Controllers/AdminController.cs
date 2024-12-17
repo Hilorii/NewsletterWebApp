@@ -75,9 +75,6 @@ public class AdminController : Controller
         return RedirectToAction("SentEmails", "Admin");
     }
 
-
-    
-    
     //TEMPLATE DLA MAILI 
     private string ProcessTemplate(string template, User user)
     {
@@ -124,9 +121,6 @@ public class AdminController : Controller
         await Task.WhenAll(tasks);
     }
 
-
-
-    
     [HttpGet]
     public IActionResult TrackOpen(int logId)
     {
@@ -147,7 +141,6 @@ public class AdminController : Controller
         // Zwróć pusty obraz
         return File(new byte[0], "image/gif");
     }
-
 
     [HttpGet]
     public IActionResult TrackClick(int logId)
@@ -208,8 +201,6 @@ public class AdminController : Controller
             _logger.LogError(ex, "Błąd podczas zapisywania zmian w bazie danych.");
         }
     }
-
-
 
     [AdminOnly]
     public IActionResult SubscribersList()
@@ -274,8 +265,26 @@ public class AdminController : Controller
             })
             .ToList();
 
-
         return View(emails);
+    }
+
+    [AdminOnly]
+    public IActionResult NewslettersList()
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var newsletters = _context.Emails
+            .Where(n => n.IsNewsletter)
+            .Select(n => new NewsletterViewModel
+            {
+                Id = n.Id,
+                Title = n.Title
+            }).ToList();
+
+        return View(newsletters);
     }
 
     [AdminOnly]

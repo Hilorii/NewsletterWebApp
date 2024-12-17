@@ -281,6 +281,7 @@ public class AdminController : Controller
             .Where(n => n.IsNewsletter)
             .Select(n => new NewsletterViewModel
             {
+                Id = n.Id,
                 Title = n.Title
             }).ToList();
 

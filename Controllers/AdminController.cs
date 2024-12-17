@@ -325,4 +325,40 @@ public class AdminController : Controller
 
         return RedirectToAction("CreateNewsletter", "Admin");
     }
+
+    [AdminOnly]
+    public IActionResult DeleteNewsletter(int id)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var newsletter = _context.Emails.Single(n => n.IsNewsletter && n.Id == id);
+
+        return View(new NewsletterViewModel
+        {
+            Id = newsletter.Id,
+            Title = newsletter.Title
+        });
+    }
+
+    [AdminOnly]
+    [HttpPost]
+    public IActionResult DeleteNewsletter(int id, bool confirm)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        if (confirm)
+        {
+            var email = _context.Emails.Single(n => n.IsNewsletter && n.Id == id);
+            _context.Emails.Remove(email);
+            _context.SaveChanges();
+        }
+
+        return RedirectToAction("NewslettersList", "Admin");
+    }
 }

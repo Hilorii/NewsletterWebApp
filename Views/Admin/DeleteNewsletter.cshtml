@@ -1,0 +1,15 @@
+﻿@model NewsletterWebApp.ViewModels.NewsletterViewModel
+
+@{
+    ViewData["Title"] = "Usuń Newsletter";
+}
+
+<div class="text-center">
+    <h2>Czy na pewno chcesz usunąć newsletter "@Model.Title"?</h2>
+</div>
+
+<form method="post" action="/Admin/DeleteNewsletter">
+    <input type="hidden" id="id" name="id" value="@Model.Id" />
+    <button type="submit" class="me-2 btn btn-danger" id="confirm" name="confirm" value="true">Tak</button>
+    <button type="submit" class="me-2 btn btn-secondary" id="confirm" name="confirm" value="false">Nie</button>
+</form>

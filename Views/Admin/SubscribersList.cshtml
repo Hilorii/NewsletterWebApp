@@ -2,8 +2,7 @@
 
 @{
     ViewData["Title"] = "Lista Subskrybentów";
-    int counter = 1;
-    var totalUsers = Model.Count();
+    var counter = 1;
 }
 
 <div class="text-center">
@@ -18,7 +17,7 @@
             <span>@user.Email</span> 
         </div>
 
-        @if (counter < totalUsers)
+        @if (counter < Model.Count())
         {
             <hr style="border: none; height: 1px; background-color: rgba(0, 0, 0, 0.4);"> 
         }

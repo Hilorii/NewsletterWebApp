@@ -2,8 +2,7 @@
 
 @{
     ViewData["Title"] = "Lista Newsletterów";
-    int counter = 1;
-    var totalNewsletters = Model.Count();
+    var counter = 1;
 }
 
 <div class="text-center">
@@ -15,10 +14,13 @@
     {
         <div class="d-flex align-items-center mb-2">
             <span class="me-2 fw-bold">@counter.</span>
-            <span>@newsletter.Title</span>
+            <span class="me-2">@newsletter.Title</span>
+            <span class="me-2"><a href="EditNewsletter/@newsletter.Id" onclick="alert('w budowie'); return false">Edytuj</a></span>
+            <span class="me-2"><a href="DeleteNewsletter/@newsletter.Id" onclick="alert('w budowie'); return false">Usuń</a></span>
+            <span class="me-2"><a href="SendEmail/@newsletter.Id" onclick="alert('w budowie'); return false">Wyślij</a></span>
         </div>
 
-        @if (counter < totalNewsletters)
+        @if (counter < Model.Count())
         {
             <hr style="border: none; height: 1px; background-color: rgba(0, 0, 0, 0.4);">
         }

@@ -49,8 +49,7 @@ public class AdminController : Controller
         {
             Title = title,
             Content = content,
-            ScheduledAt = scheduledAt.HasValue ? scheduledAt.Value.ToUniversalTime() : DateTime.UtcNow
-
+            ScheduledAt = scheduledAt ?? DateTime.UtcNow // Ustaw domyślną wartość, jeśli null
         };
 
         _context.Emails.Add(email);
@@ -172,15 +171,12 @@ public class AdminController : Controller
     //Wysyłanie maili zaplanowanych
     public async Task SendScheduledEmails()
     {
-        _logger.LogInformation("Rozpoczynam wysyłanie zaplanowanych e-maili.");
-
         // Pobierz e-maile do wysłania
         var emailsToSend = _context.Emails
-            .Where(e => e.ScheduledAt.HasValue && e.ScheduledAt.Value.ToUniversalTime() <= DateTime.UtcNow && !e.IsSent)
+            .Where(e => e.ScheduledAt.HasValue && e.ScheduledAt.Value.ToUniversalTime() <= DateTime.UtcNow)
             .ToList();
 
-        _logger.LogInformation($"Znaleziono {emailsToSend.Count} zaplanowanych e-maili do wysłania.");
-
+        // Pobierz listę użytkowników
         var users = _context.Users
             .Where(u => !u.Admin && u.Subscribed)
             .ToList();
@@ -189,32 +185,29 @@ public class AdminController : Controller
         {
             try
             {
-                // Log wysyłki
-                _logger.LogInformation($"Wysyłanie e-maila: {email.Title}, ID: {email.Id}");
-
+                // Wyślij zaplanowane e-maile
                 await SendEmailsToUsersWithSendGridAsync(email.Title, email.Content, email.Id, users);
-                
-                email.IsSent = true;
-                _context.Emails.Update(email);
 
+                // Resetowanie daty zaplanowanej
+                email.ScheduledAt = null;
+                _context.Emails.Update(email);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Błąd podczas wysyłania e-maila ID: {email.Id}");
+                _logger.LogError(ex, $"Błąd podczas wysyłania zaplanowanego e-maila: {email.Title}, ID: {email.Id}");
             }
         }
 
         try
         {
+            // Zapisz zmiany w bazie danych
             _context.SaveChanges();
-            _logger.LogInformation("Zapisano zmiany w bazie danych po wysyłce e-maili.");
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Błąd podczas zapisywania zmian w bazie danych.");
         }
     }
-
 
 
 

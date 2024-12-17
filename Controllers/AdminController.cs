@@ -313,17 +313,66 @@ public class AdminController : Controller
             return View();
         }
 
-        var email = new Email
+        var newsletter = new Email
         {
             Title = title,
             Content = content,
             ImageUrl = imageUrl,
             IsNewsletter = true
         };
-        _context.Emails.Add(email);
+        _context.Emails.Add(newsletter);
         _context.SaveChanges();
 
-        return RedirectToAction("CreateNewsletter", "Admin");
+        return RedirectToAction("NewslettersList", "Admin");
+    }
+
+    [AdminOnly]
+    public IActionResult EditNewsletter(int id)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var newsletter = _context.Emails.Single(n => n.IsNewsletter && n.Id == id);
+
+        return View(new NewsletterViewModel
+        {
+            Id = newsletter.Id,
+            Title = newsletter.Title,
+            Content = newsletter.Content
+        });
+    }
+
+    [AdminOnly]
+    [HttpPost]
+    public IActionResult EditNewsletter(int id, string title, string content, string? imageUrl)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var newsletter = _context.Emails.Single(n => n.IsNewsletter && n.Id == id);
+
+        if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
+        {
+            ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
+            return View(new NewsletterViewModel
+            {
+                Id = newsletter.Id,
+                Title = newsletter.Title,
+                Content = newsletter.Content
+            });
+        }
+
+        _context.Emails.Update(newsletter);
+        newsletter.Title = title;
+        newsletter.Content = content;
+        newsletter.ImageUrl = imageUrl;
+        _context.SaveChanges();
+
+        return RedirectToAction("NewslettersList", "Admin");
     }
 
     [AdminOnly]

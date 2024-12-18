@@ -31,6 +31,7 @@ public class AdminController : Controller
         return HttpContextAccessor.HttpContext.Session.GetString("IsAdmin") == "true";
     }
     
+    [AdminOnly]
     [HttpPost]
     public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt)
     {
@@ -54,16 +55,38 @@ public class AdminController : Controller
 
         _context.Emails.Add(email);
         _context.SaveChanges();
+        
+        var users = _context.Users
+            .Where(u => !u.Admin && u.Subscribed)
+            .ToList();
+        
+        var emailLog = new EmailLog
+        {
+            EmailId = email.Id
+        };
+        _context.EmailLogs.Add(emailLog);
+        _context.SaveChanges();
+        
+        foreach (var user in users)
+        {
+            var emailLogUser = new EmailLogUser
+            {
+                EmailLogId = emailLog.Id,
+                UserId = user.Id
+            };
+            _context.EmailLogUsers.Add(emailLogUser);
+        }
+        _context.SaveChanges();
 
         if (!scheduledAt.HasValue || scheduledAt <= DateTime.UtcNow)
         {
-            var users = _context.Users
+            var userss = _context.Users
                 .Where(u => !u.Admin && u.Subscribed)
                 .ToList();
 
             try
             {
-                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
+                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, userss);
             }
             catch (Exception ex)
             {

@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\wwwroot\\footer1.gif",
+      "PackagePath": "staticwebassets\\footer1.gif"
+    },
+    {
       "Id": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

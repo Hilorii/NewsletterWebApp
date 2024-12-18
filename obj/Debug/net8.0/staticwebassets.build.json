@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "H0JkqbRbf/s12HlcNyaNJKW9cz9SD37hANCaVP2L0mM=",
+  "Hash": "Qk8FcSY2H7mZeNi/KcGpS0HURnqGgWlRs/E16SJjt7k=",
   "Source": "NewsletterWebApp",
   "BasePath": "_content/NewsletterWebApp",
   "Mode": "Default",
@@ -72,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\wwwroot\\footer1.gif",
+      "SourceId": "NewsletterWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\wwwroot\\",
+      "BasePath": "_content/NewsletterWebApp",
+      "RelativePath": "footer1.gif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\footer1.gif"
     },
     {
       "Identity": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\wwwroot\\js\\site.js",

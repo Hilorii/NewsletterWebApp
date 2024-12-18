@@ -49,7 +49,7 @@ public class AdminController : Controller
         {
             Title = title,
             Content = content,
-            ScheduledAt = scheduledAt ?? DateTime.UtcNow // Ustaw domyślną wartość, jeśli null
+            ScheduledAt = scheduledAt ?? DateTime.UtcNow 
         };
 
         _context.Emails.Add(email);
@@ -120,6 +120,7 @@ public class AdminController : Controller
 
         await Task.WhenAll(tasks);
     }
+
 
     [HttpGet]
     public IActionResult TrackOpen(int logId)

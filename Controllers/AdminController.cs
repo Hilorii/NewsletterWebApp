@@ -247,6 +247,7 @@ public class AdminController : Controller
         }
 
         var emails = _context.Emails
+            .Where(e => e.IsNewsletter == false)
             .Include(e => e.EmailLogs)
             .ThenInclude(el => el.Clicks)
             .ToList()

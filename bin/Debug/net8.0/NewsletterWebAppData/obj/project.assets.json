@@ -4801,24 +4801,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\uzytkownik\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Hilori\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
+      "projectUniqueName": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
       "projectName": "NewsletterWebAppData",
-      "projectPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
-      "packagesPath": "C:\\Users\\uzytkownik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\uzytkownik\\Source\\Repos\\NewsletterWebApp\\NewsletterWebAppData\\obj\\",
+      "projectPath": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\NewsletterWebAppData\\NewsletterWebAppData.csproj",
+      "packagesPath": "C:\\Users\\Hilori\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Hilori\\RiderProjects\\NewsletterWebApp\\NewsletterWebAppData\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
+      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
-        "C:\\Users\\uzytkownik\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Hilori\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4826,6 +4822,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4843,8 +4840,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -4887,7 +4883,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

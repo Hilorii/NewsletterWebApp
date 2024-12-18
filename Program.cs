@@ -27,12 +27,12 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AdminController>();
 
 // Konfiguracja Hangfire
-builder.Services.AddHangfire(config =>
-    config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddHangfireServer();
+// builder.Services.AddHangfire(config =>
+//     config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+// builder.Services.AddHangfireServer();
 
 // Dla zaplanowanych maili
-builder.Services.AddHostedService<ScheduledEmailSender>();
+// builder.Services.AddHostedService<ScheduledEmailSender>();
 
 var app = builder.Build();
 
@@ -51,11 +51,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 // Konfiguracja Hangfire Dashboard
-app.UseHangfireDashboard();
-RecurringJob.AddOrUpdate<AdminController>(
-    "SendScheduledEmailsJob",
-    controller => controller.SendScheduledEmails(),
-    Cron.Minutely);
+// app.UseHangfireDashboard();
+// RecurringJob.AddOrUpdate<AdminController>(
+//     "SendScheduledEmailsJob",
+//     controller => controller.SendScheduledEmails(),
+//     Cron.Minutely);
 
 // Konfiguracja routingu
 app.UseRouting();

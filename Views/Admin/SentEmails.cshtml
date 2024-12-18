@@ -16,7 +16,7 @@
             <span class="me-2 fw-bold">@counter.</span>
             <div>
                 <div><strong>Tytuł:</strong> @email.Title</div>
-                <div><strong>Wysłano:</strong> @email.CreatedAt.ToString("yyyy-MM-dd HH:mm" ?? "Brak daty")</div>
+                <div><strong>Wysłano:</strong> @email.SentAt.ToString("yyyy-MM-dd HH:mm" ?? "Brak daty")</div>
                 <div><strong>Otworzenia:</strong> @email.TotalOpens</div>
                 <div><strong>Kliknięcia:</strong> @email.TotalClicks</div>
             </div>

@@ -70,6 +70,6 @@ public class Email
     public bool IsSent { get; set; }
 
     // Relacje
-    public ICollection<EmailLog> EmailLogs { get; set; } // Jeden email może być logowany wiele razy
+    public ICollection<EmailLog> EmailLogs { get; set; } = new List<EmailLog>();// Jeden email może być logowany wiele razy
 }
 }

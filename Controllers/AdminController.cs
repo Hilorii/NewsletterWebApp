@@ -248,9 +248,11 @@ public class AdminController : Controller
         }
 
         var emails = _context.Emails
-            .Where(e => e.IsNewsletter == false)
+            .Where(e => !e.IsNewsletter)
             .Include(e => e.EmailLogs)
             .ThenInclude(el => el.Clicks)
+            .Include(e => e.EmailLogs)
+            .ThenInclude(el => el.EmailLogUsers)
             .ToList()
             .Select(e => new EmailViewModel
             {
@@ -262,13 +264,15 @@ public class AdminController : Controller
                     .SelectMany(el => el.Clicks)
                     .Count() ?? 0,
                 TotalOpens = e.EmailLogs?
-                    .SelectMany(el => _context.EmailOpens.Where(op => op.EmailLogId == el.Id))
+                    .SelectMany(el => _context.EmailOpens
+                        .Where(op => op.EmailLogId == el.Id))
                     .Count() ?? 0
             })
             .ToList();
 
         return View(emails);
     }
+
 
     [AdminOnly]
     public IActionResult NewslettersList()

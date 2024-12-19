@@ -1,4 +1,6 @@
-﻿@{
+﻿@model NewsletterWebApp.ViewModels.EmailViewModel
+
+@{
     ViewData["Title"] = "Wyślij Maila";
 }
 
@@ -11,12 +13,12 @@
 <form method="post" action="/Admin/SendEmail">
     <div class="mb-3">
         <label for="title" class="form-label">Tytuł:</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Podaj tytuł wiadomości" />
+        <input type="text" class="form-control" id="title" name="title" placeholder="Podaj tytuł wiadomości" value="@Model.Title" />
     </div>
 
     <div class="mb-3">
         <label for="content" class="form-label">Treść wiadomości:</label>
-        <textarea class="form-control" id="content" name="content" style="width: 100%; height: 300px;"></textarea>
+        <textarea class="form-control" id="content" name="content" style="width: 100%; height: 300px;">@Model.Content</textarea>
         <small class="form-text text-muted">
             Możesz użyć następujących zmiennych w treści maila:
             <ul>

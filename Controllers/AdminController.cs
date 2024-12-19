@@ -246,21 +246,20 @@ public class AdminController : Controller
     }
 
     [AdminOnly]
-    public IActionResult SendEmail()
+    public IActionResult SendEmail(int? id)
     {
         if (!IsAdmin())
         {
             return RedirectToAction("Login", "Account");
         }
 
-        var users = _context.Users
-            .Where(u => !u.Admin)
-            .Select(u => new UserViewModel
-            {
-                Email = u.Email
-            }).ToList();
+        var email = _context.Emails.SingleOrDefault(n => n.Id == id);
 
-        return View(users);
+        return View(new EmailViewModel
+        {
+            Title = email?.Title ?? "",
+            Content = email?.Content ?? ""
+        });
     }
 
     [AdminOnly]

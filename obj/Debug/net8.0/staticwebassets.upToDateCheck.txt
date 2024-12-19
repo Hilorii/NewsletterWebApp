@@ -1,4 +1,5 @@
 wwwroot\css\site.css
+wwwroot\footer1.gif
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map

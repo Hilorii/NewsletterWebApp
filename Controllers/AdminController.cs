@@ -169,7 +169,7 @@ public class AdminController : Controller
     [HttpGet]
     public IActionResult TrackClick(int logId)
     {
-        var emailLog = _context.EmailLogs.Find(logId);
+        var emailLog = _context.EmailLogs.FirstOrDefault(e => e.EmailId == logId); 
         if (emailLog == null)
         {
             return NotFound();
@@ -177,7 +177,7 @@ public class AdminController : Controller
 
         var click = new Click
         {
-            EmailLogId = logId
+            EmailLogId = emailLog.Id
         };
         _context.Clicks.Add(click);
         _context.SaveChanges();

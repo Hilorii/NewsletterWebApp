@@ -17,73 +17,71 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = NewsletterWebApp
 build_property.RootNamespace = NewsletterWebApp
-build_property.ProjectDir = C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\
+build_property.ProjectDir = C:\Users\Hilori\RiderProjects\NewsletterWebApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\uzytkownik\Source\Repos\NewsletterWebApp
+build_property.MSBuildProjectDirectory = C:\Users\Hilori\RiderProjects\NewsletterWebApp
 build_property._RazorSourceGeneratorDebug = 
-build_property.EffectiveAnalysisLevelStyle = 8.0
-build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Account/Login.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Account/Register.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/CreateNewsletter.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Admin/CreateNewsletter.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlTmV3c2xldHRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/DeleteNewsletter.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Admin/DeleteNewsletter.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlTmV3c2xldHRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/EditNewsletter.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Admin/EditNewsletter.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdE5ld3NsZXR0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/NewslettersList.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Admin/NewslettersList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTmV3c2xldHRlcnNMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/SendEmail.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Admin/SendEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2VuZEVtYWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/SentEmails.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Admin/SentEmails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2VudEVtYWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Admin/SubscribersList.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Admin/SubscribersList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU3Vic2NyaWJlcnNMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Home/Index.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Shared/Error.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/_ViewImports.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/_ViewStart.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uzytkownik/Source/Repos/NewsletterWebApp/Views/Shared/_Layout.cshtml]
+[C:/Users/Hilori/RiderProjects/NewsletterWebApp/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-jtasg86lf9

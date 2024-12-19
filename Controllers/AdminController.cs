@@ -182,8 +182,7 @@ public class AdminController : Controller
         _context.Clicks.Add(click);
         _context.SaveChanges();
 
-        // return Redirect("/");
-        return RedirectToAction("Index", "Home");
+        return Redirect("/");
     }
     
     //Wysyłanie maili zaplanowanych

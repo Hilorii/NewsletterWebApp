@@ -124,7 +124,8 @@ public class AdminController : Controller
 
                 // Link do piksela śledzącego otwarcia
                 var pixelUrl = Url.Action("TrackOpen", "Admin", new { logId = emailLogId }, Request.Scheme);
-
+                _logger.LogInformation("Generated pixel URL: {pixelUrl} for user: {email}", pixelUrl, user.Email);
+                
                 // Dodaj piksel do treści wiadomości
                 var htmlContent = $"{personalizedContent}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>" +
                                   $"<img src=\"{pixelUrl}\" alt=\"\" style=\"display:none;\" />";
@@ -148,23 +149,36 @@ public class AdminController : Controller
     [HttpGet]
     public IActionResult TrackOpen(int logId)
     {
-        var emailLog = _context.EmailLogs.Find(logId);
+        _logger.LogInformation("TrackOpen invoked with logId: {logId}", logId);
+
+        var emailLog = _context.EmailLogs.FirstOrDefault(e => e.EmailId == logId); 
+
         if (emailLog == null)
         {
+            _logger.LogWarning("TrackOpen: EmailLog not found for logId: {logId}", logId);
             return NotFound();
         }
 
         var open = new EmailOpen
         {
-            EmailLogId = logId,
-            CreatedAt = DateTime.UtcNow
+            EmailLogId = emailLog.Id
         };
-        _context.EmailOpens.Add(open);
-        _context.SaveChanges();
 
-        // Zwróć pusty obraz
+        try
+        {
+            _context.EmailOpens.Add(open);
+            _context.SaveChanges();
+            _logger.LogInformation("TrackOpen: Successfully added EmailOpen entry for logId: {logId}", logId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "TrackOpen: Error saving EmailOpen entry for logId: {logId}", logId);
+        }
+
+        // Return a transparent pixel
         return File(new byte[0], "image/gif");
     }
+
 
     [HttpGet]
     public IActionResult TrackClick(int logId)

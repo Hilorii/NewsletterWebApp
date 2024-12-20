@@ -32,7 +32,7 @@ public class AdminController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool isAdminOverride = false)
+    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool scheduled, bool isAdminOverride = false)
     {
         if (!isAdminOverride && !IsAdmin())
         {
@@ -65,6 +65,7 @@ public class AdminController : Controller
         };
         _context.EmailLogs.Add(emailLog);
         _context.SaveChanges();
+        
         
         foreach (var user in users)
         {

@@ -64,6 +64,9 @@ namespace NewsletterWebApp.Migrations
                     b.Property<bool>("IsNewsletter")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsScheduled")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsSent")
                         .HasColumnType("boolean");
 

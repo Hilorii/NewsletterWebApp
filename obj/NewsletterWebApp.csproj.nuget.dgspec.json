@@ -64,6 +64,18 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.13.1, )"
+            },
+            "Quartz.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[3.13.1, )"
+            },
+            "Quartz.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[3.13.1, )"
+            },
             "SendGrid": {
               "target": "Package",
               "version": "[9.29.3, )"

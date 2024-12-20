@@ -105,7 +105,7 @@ public class AdminController : Controller
             .Replace("{{Email}}", user.Email);
     }
 
-    private async Task SendEmailsToUsersWithSendGridAsync(string title, string content, int emailLogId, IEnumerable<User> users)
+    public async Task SendEmailsToUsersWithSendGridAsync(string title, string content, int emailLogId, IEnumerable<User> users)
     {
         var apiKey = "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";
         var client = new SendGridClient(apiKey);

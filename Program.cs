@@ -1,6 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using NewsletterWebApp.Controllers;
 using NewsletterWebApp.Data;
+using NewsletterWebApp.Jobs;
+using Quartz;
+using Quartz.Spi;
+using Microsoft.Extensions.DependencyInjection;
+using Quartz.Simpl;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,12 +25,26 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+//Quartz.NET do wysyłania zaplanowanych mailów
+builder.Services.AddQuartz(q =>
+{
+    q.UseJobFactory<MicrosoftDependencyInjectionJobFactory>();
+
+    var jobKey = new JobKey("EmailSchedulerJob");
+    q.AddJob<EmailSchedulerJob>(opts => opts.WithIdentity(jobKey));
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("EmailSchedulerJob-trigger")
+        .WithCronSchedule("0 * * * * ?")); // Wykonywane co minutę
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
 // Dodanie kontekstu HTTP i kontrolerów
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AdminController>();
+builder.Services.AddScoped<EmailSchedulerJob>();
 
-// Dla zaplanowanych maili
-// builder.Services.AddHostedService<ScheduledEmailSender>();
 
 var app = builder.Build();
 

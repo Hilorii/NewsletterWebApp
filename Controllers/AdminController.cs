@@ -28,14 +28,13 @@ public class AdminController : Controller
 
     private bool IsAdmin()
     {
-        return HttpContextAccessor.HttpContext.Session.GetString("IsAdmin") == "true";
+        return HttpContextAccessor.HttpContext?.Session?.GetString("IsAdmin") == "true";
     }
     
-    [AdminOnly]
     [HttpPost]
-    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt)
+    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool isAdminOverride = false)
     {
-        if (!IsAdmin())
+        if (!isAdminOverride && !IsAdmin())
         {
             return RedirectToAction("Login", "Account");
         }
@@ -110,7 +109,7 @@ public class AdminController : Controller
         var apiKey = "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";
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("hilori.furan@wp.pl", "MailCraft");
-
+    
         var tasks = users.Select(async user =>
         {
             try
@@ -118,10 +117,10 @@ public class AdminController : Controller
                 // Przetwórz tytuł i treść z dynamicznymi zmiennymi
                 var personalizedTitle = ProcessTemplate(title, user);
                 var personalizedContent = ProcessTemplate(content, user);
-
+    
                 // Link śledzący kliknięcia
                 var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
-
+    
                 // Link do piksela śledzącego otwarcia
                 var pixelUrl = Url.Action("TrackOpen", "Admin", new { logId = emailLogId }, Request.Scheme);
                 _logger.LogInformation("Generated pixel URL: {pixelUrl} for user: {email}", pixelUrl, user.Email);
@@ -129,11 +128,11 @@ public class AdminController : Controller
                 // Dodaj piksel do treści wiadomości
                 var htmlContent = $"{personalizedContent}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>" +
                                   $"<img src=\"{pixelUrl}\" alt=\"\" style=\"display:none;\" />";
-
+    
                 // Wyślij email
                 var to = new EmailAddress(user.Email);
                 var msg = MailHelper.CreateSingleEmail(from, to, personalizedTitle, personalizedContent, htmlContent);
-
+    
                 await client.SendEmailAsync(msg);
             }
             catch (Exception ex)
@@ -141,9 +140,47 @@ public class AdminController : Controller
                 _logger.LogError(ex, $"Błąd wysyłania e-maila do {user.Email}");
             }
         });
-
+    
         await Task.WhenAll(tasks);
     }
+    
+    // public async Task SendEmailsToUsersWithSendGridAsync(string title, string content, int emailLogId, IEnumerable<User> users)
+    // {
+    //     var apiKey = "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";
+    //     var client = new SendGridClient(apiKey);
+    //     var from = new EmailAddress("hilori.furan@wp.pl", "MailCraft");
+    //
+    //     var tasks = users.Select(async user =>
+    //     {
+    //         try
+    //         {
+    //             // Przetwórz tytuł i treść z dynamicznymi zmiennymi
+    //             var personalizedTitle = ProcessTemplate(title, user);
+    //             var personalizedContent = ProcessTemplate(content, user);
+    //
+    //             // Link śledzący kliknięcia
+    //             
+    //
+    //      
+    //             
+    //             // Dodaj piksel do treści wiadomości
+    //             var htmlContent = $"{personalizedContent}<br><br><a href=\"\">Kliknij tutaj</a>" +
+    //                               $"<img src=\"\" alt=\"\" style=\"display:none;\" />";
+    //
+    //             // Wyślij email
+    //             var to = new EmailAddress(user.Email);
+    //             var msg = MailHelper.CreateSingleEmail(from, to, personalizedTitle, personalizedContent, htmlContent);
+    //
+    //             await client.SendEmailAsync(msg);
+    //         }
+    //         catch (Exception ex)
+    //         {
+    //             _logger.LogError(ex, $"Błąd wysyłania e-maila do {user.Email}");
+    //         }
+    //     });
+    //
+    //     await Task.WhenAll(tasks);
+    // }
 
 
     [HttpGet]

@@ -47,7 +47,7 @@ namespace NewsletterWebApp.Jobs
                     // Call the existing method to send emails
                     var adminController = scope.ServiceProvider.GetRequiredService<AdminController>();
                     // await adminController.SendEmailsToUsersWithSendGridAsync(email.Title, email.Content, email.Id, users);
-                    await adminController.SendEmail(email.Title, email.Content, email.ScheduledAt);
+                    await adminController.SendEmail(email.Title, email.Content, email.ScheduledAt, true);
 
                     email.IsSent = true;
                     email.UpdatedAt = DateTime.UtcNow;

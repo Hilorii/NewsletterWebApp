@@ -1,5 +1,3 @@
-using Hangfire;
-using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 using NewsletterWebApp.Controllers;
 using NewsletterWebApp.Data;
@@ -26,11 +24,6 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AdminController>();
 
-// Konfiguracja Hangfire
-// builder.Services.AddHangfire(config =>
-//     config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
-// builder.Services.AddHangfireServer();
-
 // Dla zaplanowanych maili
 // builder.Services.AddHostedService<ScheduledEmailSender>();
 
@@ -50,12 +43,6 @@ app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-// Konfiguracja Hangfire Dashboard
-// app.UseHangfireDashboard();
-// RecurringJob.AddOrUpdate<AdminController>(
-//     "SendScheduledEmailsJob",
-//     controller => controller.SendScheduledEmails(),
-//     Cron.Minutely);
 
 // Konfiguracja routingu
 app.UseRouting();

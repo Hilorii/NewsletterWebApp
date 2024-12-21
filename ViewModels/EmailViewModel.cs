@@ -7,6 +7,8 @@
         
         public DateTime CreatedAt { get; set; }
         public DateTime SentAt { get; set; }
+        
+        public DateTime ScheduledAt { get; set; }
         public int TotalClicks { get; set; }
         public int TotalOpens { get; set; }
     }

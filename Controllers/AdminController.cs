@@ -392,7 +392,7 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
         }
 
         var emails = _context.Emails
-            .Where(e => !e.IsNewsletter && e.IsSent) // Dodany warunek na IsSent == true
+            .Where(e => !e.IsNewsletter && e.IsSent)
             .Include(e => e.EmailLogs)
             .ThenInclude(el => el.Clicks)
             .Include(e => e.EmailLogs)
@@ -416,6 +416,29 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
 
         return View(emails);
     }
+    
+    [AdminOnly]
+    public IActionResult PlannedEmails()
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var emails = _context.Emails
+            .Where(e => !e.IsNewsletter && !e.IsSent)
+            .Include(e => e.EmailLogs)
+            .ToList()
+            .Select(e => new EmailViewModel
+            {
+                Title = e.Title ?? "Brak tytułu",
+                ScheduledAt = e.ScheduledAt ?? DateTime.MinValue 
+            })
+            .ToList();
+
+        return View(emails);
+    }
+
 
 
 

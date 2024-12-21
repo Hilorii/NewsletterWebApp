@@ -31,42 +31,92 @@ public class AdminController : Controller
         return HttpContextAccessor.HttpContext?.Session?.GetString("IsAdmin") == "true";
     }
     
-    [HttpPost]
-    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool scheduled, bool isAdminOverride = false)
+[HttpPost]
+public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool scheduled, bool isAdminOverride = false)
+{
+    if (!isAdminOverride && !IsAdmin())
     {
-        if (!isAdminOverride && !IsAdmin())
-        {
-            return RedirectToAction("Login", "Account");
-        }
+        return RedirectToAction("Login", "Account");
+    }
 
-        if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
-        {
-            ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
-            return View();
-        }
+    if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
+    {
+        ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
+        return View();
+    }
 
-        var email = new Email
+    if (scheduledAt.HasValue && scheduledAt > DateTime.UtcNow)
+    {
+        scheduled = true;
+    }
+
+    Email email;
+
+    if (isAdminOverride && scheduled)
+    {
+        // Retrieve the existing email instead of creating a new one
+        email = _context.Emails.FirstOrDefault(e => e.Title == title && e.Content == content && e.ScheduledAt == scheduledAt);
+        if (email == null)
+        {
+            return StatusCode(404, "Nie znaleziono wiadomości e-mail do wysłania.");
+        }
+    }
+    else
+    {
+        // Create a new email record
+        email = new Email
         {
             Title = title,
             Content = content,
-            ScheduledAt = scheduledAt ?? DateTime.UtcNow 
+            ScheduledAt = scheduledAt ?? DateTime.UtcNow,
+            IsScheduled = scheduled
         };
 
         _context.Emails.Add(email);
         _context.SaveChanges();
-        
+    }
+
+    if (scheduled)
+    {
+        if (scheduledAt.HasValue && scheduledAt <= DateTime.UtcNow)
+        {
+            var users = _context.Users
+                .Where(u => !u.Admin && u.Subscribed)
+                .ToList();
+
+            try
+            {
+                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
+
+                // Update email status after sending
+                email.IsScheduled = false;
+                email.IsSent = true;
+                email.UpdatedAt = DateTime.UtcNow;
+                _context.Emails.Update(email);
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Email {EmailId} sent and status updated.", email.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Błąd podczas wysyłania wiadomości e-mail.");
+                return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
+            }
+        }
+    }
+    else
+    {
         var users = _context.Users
             .Where(u => !u.Admin && u.Subscribed)
             .ToList();
-        
+
         var emailLog = new EmailLog
         {
             EmailId = email.Id
         };
         _context.EmailLogs.Add(emailLog);
         _context.SaveChanges();
-        
-        
+
         foreach (var user in users)
         {
             var emailLogUser = new EmailLogUser
@@ -80,13 +130,15 @@ public class AdminController : Controller
 
         if (!scheduledAt.HasValue || scheduledAt <= DateTime.UtcNow)
         {
-            var userss = _context.Users
-                .Where(u => !u.Admin && u.Subscribed)
-                .ToList();
-
             try
             {
-                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, userss);
+                email.IsSent = true;
+                email.IsScheduled = false;
+                email.UpdatedAt = DateTime.UtcNow;
+                _context.Emails.Update(email);
+                await _context.SaveChangesAsync();
+                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
+                _logger.LogInformation("Email {EmailId} sent and status updated.", email.Id);
             }
             catch (Exception ex)
             {
@@ -94,9 +146,13 @@ public class AdminController : Controller
                 return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
             }
         }
-
-        return RedirectToAction("SentEmails", "Admin");
     }
+
+    return RedirectToAction("SentEmails", "Admin");
+}
+
+
+
 
     //TEMPLATE DLA MAILI 
     private string ProcessTemplate(string template, User user)

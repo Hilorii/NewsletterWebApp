@@ -27,7 +27,7 @@ namespace NewsletterWebApp.Jobs
             var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
 
             var emailsToSend = dbContext.Emails
-                .Where(e => e.ScheduledAt <= DateTime.UtcNow && !e.IsSent)
+                .Where(e => e.ScheduledAt <= DateTime.UtcNow && e.IsScheduled)
                 .ToList();
 
             if (!emailsToSend.Any())
@@ -49,8 +49,8 @@ namespace NewsletterWebApp.Jobs
                     // await adminController.SendEmailsToUsersWithSendGridAsync(email.Title, email.Content, email.Id, users);
                     await adminController.SendEmail(email.Title, email.Content, email.ScheduledAt, true, true);
 
-                    email.IsScheduled = true;
-                    email.IsSent = true;
+                    // email.IsScheduled = true;
+                    // email.IsSent = false;
                     email.UpdatedAt = DateTime.UtcNow;
                     dbContext.Emails.Update(email);
                     _logger.LogInformation("Email {EmailId} sent successfully.", email.Id);

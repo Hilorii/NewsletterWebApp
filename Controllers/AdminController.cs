@@ -83,17 +83,34 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
             var users = _context.Users
                 .Where(u => !u.Admin && u.Subscribed)
                 .ToList();
+            
+            var emailLog = new EmailLog
+            {
+                EmailId = email.Id
+            };
+            _context.EmailLogs.Add(emailLog);
+            _context.SaveChanges();
+
+            foreach (var user in users)
+            {
+                var emailLogUser = new EmailLogUser
+                {
+                    EmailLogId = emailLog.Id,
+                    UserId = user.Id
+                };
+                _context.EmailLogUsers.Add(emailLogUser);
+            }
+            _context.SaveChanges();
+            
             try
             {
-                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
-
-                // Update email status after sending
-                email.IsScheduled = false;
+                
                 email.IsSent = true;
+                email.IsScheduled = false;
                 email.UpdatedAt = DateTime.UtcNow;
                 _context.Emails.Update(email);
                 await _context.SaveChangesAsync();
-
+                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
                 _logger.LogInformation("Email {EmailId} sent and status updated.", email.Id);
             }
             catch (Exception ex)

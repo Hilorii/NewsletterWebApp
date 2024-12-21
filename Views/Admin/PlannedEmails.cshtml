@@ -14,10 +14,13 @@
     {
         <div class="d-flex align-items-center mb-2">
             <span class="me-2 fw-bold">@counter.</span>
-            <div>
+            <div class="flex-grow-1">
                 <div><strong>Tytuł:</strong> @email.Title</div>
                 <div><strong>Zaplanowano na:</strong> @email.ScheduledAt.ToString("yyyy-MM-dd HH:mm" ?? "Brak daty")</div>
             </div>
+            <form asp-action="DeletePlannedEmail" asp-route-id="@email.Id" method="post" class="ms-3">
+                <button type="submit" class="me-2">Usuń</button>
+            </form>
         </div>
 
         @if (counter < Model.Count())

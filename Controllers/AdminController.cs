@@ -431,12 +431,29 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
             .ToList()
             .Select(e => new EmailViewModel
             {
+                Id = e.Id,
                 Title = e.Title ?? "Brak tytułu",
-                ScheduledAt = e.ScheduledAt ?? DateTime.MinValue 
+                ScheduledAt = e.ScheduledAt ?? DateTime.MinValue
             })
             .ToList();
 
         return View(emails);
+    }
+    
+    //USUWANIE ZAPLANOWANYCH MAILÓW
+    [HttpPost]
+    public IActionResult DeletePlannedEmail(int id)
+    {
+        var email = _context.Emails.FirstOrDefault(e => e.Id == id);
+        if (email == null)
+        {
+            return NotFound();
+        }
+
+        _context.Emails.Remove(email);
+        _context.SaveChanges();
+
+        return RedirectToAction("PlannedEmails");
     }
 
 

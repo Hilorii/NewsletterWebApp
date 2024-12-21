@@ -190,12 +190,10 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
                 // Przetwórz tytuł i treść z dynamicznymi zmiennymi
                 var personalizedTitle = ProcessTemplate(title, user);
                 var personalizedContent = ProcessTemplate(content, user);
-    
-                // Link śledzący kliknięcia
-                var trackingUrl = Url.Action("TrackClick", "Admin", new { logId = emailLogId }, Request.Scheme);
-    
-                // Link do piksela śledzącego otwarcia
-                var pixelUrl = Url.Action("TrackOpen", "Admin", new { logId = emailLogId }, Request.Scheme);
+
+                var baseUrl = "http://localhost:5189";
+                var trackingUrl = $"{baseUrl}/Admin/TrackClick?logId={emailLogId}";
+                var pixelUrl = $"{baseUrl}/Admin/TrackOpen?logId={emailLogId}";
                 _logger.LogInformation("Generated pixel URL: {pixelUrl} for user: {email}", pixelUrl, user.Email);
                 
                 // Dodaj piksel do treści wiadomości

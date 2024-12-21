@@ -392,7 +392,7 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
         }
 
         var emails = _context.Emails
-            .Where(e => !e.IsNewsletter)
+            .Where(e => !e.IsNewsletter && e.IsSent) // Dodany warunek na IsSent == true
             .Include(e => e.EmailLogs)
             .ThenInclude(el => el.Clicks)
             .Include(e => e.EmailLogs)
@@ -416,6 +416,7 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
 
         return View(emails);
     }
+
 
 
     [AdminOnly]

@@ -83,7 +83,6 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
             var users = _context.Users
                 .Where(u => !u.Admin && u.Subscribed)
                 .ToList();
-
             try
             {
                 await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);

@@ -43,6 +43,7 @@ namespace NewsletterWebApp.Jobs
                     var users = dbContext.Users
                         .Where(u => !u.Admin && u.Subscribed)
                         .ToList();
+                    
 
                     // Call the existing method to send emails
                     var adminController = scope.ServiceProvider.GetRequiredService<AdminController>();

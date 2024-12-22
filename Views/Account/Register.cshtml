@@ -2,21 +2,77 @@
     ViewData["Title"] = "Rejestracja";
 }
 
-<h2>Rejestracja</h2>
 
 <form method="post" asp-controller="Account" asp-action="Register">
+    <h2>Rejestracja</h2>
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" required />
+        <input type="email" class="form-control" id="email" name="email" required/>
     </div>
     <div class="form-group">
         <label for="password">Hasło</label>
-        <input type="password" class="form-control" id="password" name="password" required />
+        <input type="password" class="form-control" id="password" name="password" required/>
     </div>
     <button type="submit" class="btn btn-primary">Zarejestruj</button>
+    <p>Masz już konto? <a href="/Account/Login">Zaloguj się tutaj!</a>.</p>
 </form>
 
 @if (ViewBag.ErrorMessage != null)
 {
     <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
 }
+
+<style>
+    form {
+        max-width: 600px;
+        margin: 100px auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .form-group {
+        margin-bottom: 20px; /* Oddalenie pól */
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    p a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    p a:hover {
+        text-decoration: underline;
+    }
+    
+    h2 {
+        text-align: center;
+        justify-content: center;
+    }
+</style>

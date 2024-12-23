@@ -24,6 +24,18 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-XKcy\u002BdESd5YfjMJcDQzyqcjEKk\u002B2JX/NpaxQk6NPvl8="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"137317"},{"Name":"Content-Type","Value":"image/gif"},{"Name":"ETag","Value":"\u0022XKcy\u002BdESd5YfjMJcDQzyqcjEKk\u002B2JX/NpaxQk6NPvl8=\u0022"},{"Name":"Last-Modified","Value":"Wed, 18 Dec 2024 21:52:07 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/NewsletterWebApp/js/load-tinymce.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\load-tinymce.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-oXjZEFvVD38Yjk5c351Y0FEgyXMuYvhOG1fWPN0Yc9Y="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"307"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022oXjZEFvVD38Yjk5c351Y0FEgyXMuYvhOG1fWPN0Yc9Y=\u0022"},{"Name":"Last-Modified","Value":"Mon, 23 Dec 2024 22:35:23 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/NewsletterWebApp/js/load-tinymce.xkvfrkip2k.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\load-tinymce.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"xkvfrkip2k"},{"Name":"integrity","Value":"sha256-oXjZEFvVD38Yjk5c351Y0FEgyXMuYvhOG1fWPN0Yc9Y="},{"Name":"label","Value":"_content/NewsletterWebApp/js/load-tinymce.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"307"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022oXjZEFvVD38Yjk5c351Y0FEgyXMuYvhOG1fWPN0Yc9Y=\u0022"},{"Name":"Last-Modified","Value":"Mon, 23 Dec 2024 22:35:23 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/NewsletterWebApp/js/site.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

@@ -1,5 +1,6 @@
 wwwroot\css\site.css
 wwwroot\footer1.gif
+wwwroot\js\load-tinymce.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map

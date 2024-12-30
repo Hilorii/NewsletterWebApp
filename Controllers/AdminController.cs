@@ -12,6 +12,7 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 
 namespace NewsletterWebApp.Controllers;
+
 public class AdminController : Controller
 {
     private readonly DataContext _context;
@@ -30,60 +31,102 @@ public class AdminController : Controller
     {
         return HttpContextAccessor.HttpContext?.Session?.GetString("IsAdmin") == "true";
     }
-    
-[HttpPost]
-public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool scheduled, bool isAdminOverride = false)
-{
-    if (!isAdminOverride && !IsAdmin())
-    {
-        return RedirectToAction("Login", "Account");
-    }
 
-    if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
+    [HttpPost]
+    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool scheduled, bool isAdminOverride = false)
     {
-        ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
-        return View();
-    }
-
-    if (scheduledAt.HasValue && scheduledAt > DateTime.UtcNow)
-    {
-        scheduled = true;
-    }
-
-    Email email;
-
-    if (isAdminOverride && scheduled)
-    {
-        // Retrieve the existing email instead of creating a new one
-        email = _context.Emails.FirstOrDefault(e => e.Title == title && e.Content == content && e.ScheduledAt == scheduledAt);
-        if (email == null)
+        if (!isAdminOverride && !IsAdmin())
         {
-            return StatusCode(404, "Nie znaleziono wiadomości e-mail do wysłania.");
+            return RedirectToAction("Login", "Account");
         }
-    }
-    else
-    {
-        // Create a new email record
-        email = new Email
+
+        if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
         {
-            Title = title,
-            Content = content,
-            ScheduledAt = scheduledAt ?? DateTime.UtcNow,
-            IsScheduled = scheduled
-        };
+            ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
+            return View();
+        }
 
-        _context.Emails.Add(email);
-        _context.SaveChanges();
-    }
+        if (scheduledAt.HasValue && scheduledAt > DateTime.UtcNow)
+        {
+            scheduled = true;
+        }
 
-    if (scheduled)
-    {
-        if (scheduledAt.HasValue && scheduledAt <= DateTime.UtcNow)
+        Email email;
+
+        if (isAdminOverride && scheduled)
+        {
+            // Retrieve the existing email instead of creating a new one
+            email = _context.Emails.FirstOrDefault(e => e.Title == title && e.Content == content && e.ScheduledAt == scheduledAt);
+            if (email == null)
+            {
+                return StatusCode(404, "Nie znaleziono wiadomości e-mail do wysłania.");
+            }
+        }
+        else
+        {
+            // Create a new email record
+            email = new Email
+            {
+                Title = title,
+                Content = content,
+                ScheduledAt = scheduledAt ?? DateTime.UtcNow,
+                IsScheduled = scheduled
+            };
+
+            _context.Emails.Add(email);
+            _context.SaveChanges();
+        }
+
+        if (scheduled)
+        {
+            if (scheduledAt.HasValue && scheduledAt <= DateTime.UtcNow)
+            {
+                var users = _context.Users
+                    .Where(u => !u.Admin && u.Subscribed)
+                    .ToList();
+
+                var emailLog = new EmailLog
+                {
+                    EmailId = email.Id
+                };
+                _context.EmailLogs.Add(emailLog);
+                _context.SaveChanges();
+
+                foreach (var user in users)
+                {
+                    var emailLogUser = new EmailLogUser
+                    {
+                        EmailLogId = emailLog.Id,
+                        UserId = user.Id
+                    };
+                    _context.EmailLogUsers.Add(emailLogUser);
+                }
+                _context.SaveChanges();
+
+                try
+                {
+
+                    email.IsSent = true;
+                    email.IsScheduled = false;
+                    email.UpdatedAt = DateTime.UtcNow;
+                    _context.Emails.Update(email);
+                    await _context.SaveChangesAsync();
+                    await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
+                    _logger.LogInformation("Email {EmailId} sent and status updated.", email.Id);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Błąd podczas wysyłania wiadomości e-mail.");
+                    return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
+                }
+            }
+        }
+        else
         {
             var users = _context.Users
                 .Where(u => !u.Admin && u.Subscribed)
                 .ToList();
-            
+
             var emailLog = new EmailLog
             {
                 EmailId = email.Id
@@ -101,76 +144,31 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
                 _context.EmailLogUsers.Add(emailLogUser);
             }
             _context.SaveChanges();
-            
-            try
+
+            if (!scheduledAt.HasValue || scheduledAt <= DateTime.UtcNow)
             {
-                
-                email.IsSent = true;
-                email.IsScheduled = false;
-                email.UpdatedAt = DateTime.UtcNow;
-                _context.Emails.Update(email);
-                await _context.SaveChangesAsync();
-                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
-                _logger.LogInformation("Email {EmailId} sent and status updated.", email.Id);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Błąd podczas wysyłania wiadomości e-mail.");
-                return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
+                try
+                {
+                    email.IsSent = true;
+                    email.IsScheduled = false;
+                    email.UpdatedAt = DateTime.UtcNow;
+                    _context.Emails.Update(email);
+                    await _context.SaveChangesAsync();
+                    await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
+                    _logger.LogInformation("Email {EmailId} sent and status updated.", email.Id);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Błąd podczas wysyłania wiadomości e-mail.");
+                    return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
+                }
             }
         }
-    }
-    else
-    {
-        var users = _context.Users
-            .Where(u => !u.Admin && u.Subscribed)
-            .ToList();
 
-        var emailLog = new EmailLog
-        {
-            EmailId = email.Id
-        };
-        _context.EmailLogs.Add(emailLog);
-        _context.SaveChanges();
-
-        foreach (var user in users)
-        {
-            var emailLogUser = new EmailLogUser
-            {
-                EmailLogId = emailLog.Id,
-                UserId = user.Id
-            };
-            _context.EmailLogUsers.Add(emailLogUser);
-        }
-        _context.SaveChanges();
-
-        if (!scheduledAt.HasValue || scheduledAt <= DateTime.UtcNow)
-        {
-            try
-            {
-                email.IsSent = true;
-                email.IsScheduled = false;
-                email.UpdatedAt = DateTime.UtcNow;
-                _context.Emails.Update(email);
-                await _context.SaveChangesAsync();
-                await SendEmailsToUsersWithSendGridAsync(title, content, email.Id, users);
-                _logger.LogInformation("Email {EmailId} sent and status updated.", email.Id);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Błąd podczas wysyłania wiadomości e-mail.");
-                return StatusCode(500, "Wystąpił problem z wysyłaniem wiadomości e-mail. Skontaktuj się z administratorem.");
-            }
-        }
+        return RedirectToAction("SentEmails", "Admin");
     }
 
-    return RedirectToAction("SentEmails", "Admin");
-}
-
-
-
-
-    //TEMPLATE DLA MAILI 
+    // TEMPLATE DLA MAILI 
     private string ProcessTemplate(string template, User user)
     {
         return template
@@ -182,7 +180,7 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
         var apiKey = "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";
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("hilori.furan@wp.pl", "MailCraft");
-    
+
         var tasks = users.Select(async user =>
         {
             try
@@ -195,15 +193,15 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
                 var trackingUrl = $"{baseUrl}/Admin/TrackClick?logId={emailLogId}";
                 var pixelUrl = $"{baseUrl}/Admin/TrackOpen?logId={emailLogId}";
                 _logger.LogInformation("Generated pixel URL: {pixelUrl} for user: {email}", pixelUrl, user.Email);
-                
+
                 // Dodaj piksel do treści wiadomości
                 var htmlContent = $"{personalizedContent}<br><br><a href=\"{trackingUrl}\">Kliknij tutaj</a>" +
                                   $"<img src=\"{pixelUrl}\" alt=\"\" style=\"display:none;\" />";
-    
+
                 // Wyślij email
                 var to = new EmailAddress(user.Email);
                 var msg = MailHelper.CreateSingleEmail(from, to, personalizedTitle, personalizedContent, htmlContent);
-    
+
                 await client.SendEmailAsync(msg);
             }
             catch (Exception ex)
@@ -211,10 +209,10 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
                 _logger.LogError(ex, $"Błąd wysyłania e-maila do {user.Email}");
             }
         });
-    
+
         await Task.WhenAll(tasks);
     }
-    
+
     // public async Task SendEmailsToUsersWithSendGridAsync(string title, string content, int emailLogId, IEnumerable<User> users)
     // {
     //     var apiKey = "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";
@@ -253,13 +251,12 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
     //     await Task.WhenAll(tasks);
     // }
 
-
     [HttpGet]
     public IActionResult TrackOpen(int logId)
     {
         _logger.LogInformation("TrackOpen invoked with logId: {logId}", logId);
 
-        var emailLog = _context.EmailLogs.FirstOrDefault(e => e.EmailId == logId); 
+        var emailLog = _context.EmailLogs.FirstOrDefault(e => e.EmailId == logId);
 
         if (emailLog == null)
         {
@@ -287,11 +284,10 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
         return File(new byte[0], "image/gif");
     }
 
-
     [HttpGet]
     public IActionResult TrackClick(int logId)
     {
-        var emailLog = _context.EmailLogs.FirstOrDefault(e => e.EmailId == logId); 
+        var emailLog = _context.EmailLogs.FirstOrDefault(e => e.EmailId == logId);
         if (emailLog == null)
         {
             return NotFound();
@@ -306,8 +302,8 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
 
         return Redirect("/");
     }
-    
-    //Wysyłanie maili zaplanowanych
+
+    // Wysyłanie maili zaplanowanych
     public async Task SendScheduledEmails()
     {
         // Pobierz e-maile do wysłania
@@ -416,7 +412,7 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
 
         return View(emails);
     }
-    
+
     [AdminOnly]
     public IActionResult PlannedEmails()
     {
@@ -439,8 +435,8 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
 
         return View(emails);
     }
-    
-    //USUWANIE ZAPLANOWANYCH MAILÓW
+
+    // USUWANIE ZAPLANOWANYCH MAILÓW
     [HttpPost]
     public IActionResult DeletePlannedEmail(int id)
     {
@@ -455,9 +451,6 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
 
         return RedirectToAction("PlannedEmails");
     }
-
-
-
 
     [AdminOnly]
     public IActionResult NewslettersList()
@@ -600,5 +593,19 @@ public async Task<IActionResult> SendEmail(string title, string content, DateTim
         }
 
         return RedirectToAction("NewslettersList", "Admin");
+    }
+
+    [AdminOnly]
+    public IActionResult MailingLists()
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        //var mailingLists = _context.MailingLists.ToList();
+
+        //return View(mailingLists);
+        return View();
     }
 }

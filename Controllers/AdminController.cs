@@ -10,6 +10,7 @@ using NewsletterWebApp.Data;
 using NewsletterWebApp.ViewModels;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using NewsletterWebApp.Migrations;
 
 namespace NewsletterWebApp.Controllers;
 
@@ -606,6 +607,7 @@ public class AdminController : Controller
         var mailingLists = _context.MailingLists
             .Select(l => new MailingListViewModel
             {
+                Id = l.Id,
                 Name = l.Name
             })
             .ToList();
@@ -644,6 +646,51 @@ public class AdminController : Controller
             Name = name
         };
         _context.MailingLists.Add(mailingList);
+        _context.SaveChanges();
+
+        return RedirectToAction("MailingLists", "Admin");
+    }
+
+    public IActionResult EditMailingList(int id)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var mailingList = _context.MailingLists.Single(l => l.Id == id);
+
+        return View(new MailingListViewModel
+        {
+            Id = mailingList.Id,
+            Name = mailingList.Name
+        });
+    }
+
+    [AdminOnly]
+    [HttpPost]
+    public IActionResult EditMailingList(int id, string name)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        Console.WriteLine(id);
+        var mailingList = _context.MailingLists.Single(l => l.Id == id);
+
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
+            return View(new MailingListViewModel
+            {
+                Id = mailingList.Id,
+                Name = mailingList.Name
+            });
+        }
+
+        _context.MailingLists.Update(mailingList);
+        mailingList.Name = name;
         _context.SaveChanges();
 
         return RedirectToAction("MailingLists", "Admin");

@@ -12,9 +12,15 @@
 <div class="container mt-4 p-3" style="background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 5px; box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); width: 50%;">
     @foreach (var mailingList in Model)
     {
-        <div class="d-flex align-items-center mb-2">
-            <span class="me-2 fw-bold">@counter.</span>
-            <span>@mailingList.Name</span>
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <div>
+                <span class="me-2 fw-bold">@counter.</span>
+                <span>@mailingList.Name</span>
+            </div>
+            <div>
+                <a href="EditMailingList/@mailingList.Id" class="btn btn-primary btn-sm me-2">Edytuj</a>
+                <a href="DeleteMailingList/@mailingList.Id" class="btn btn-danger btn-sm me-2">Usuń</a>
+            </div>
         </div>
 
         @if (counter < Model.Count())

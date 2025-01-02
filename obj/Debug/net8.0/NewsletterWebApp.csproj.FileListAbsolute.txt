@@ -373,7 +373,6 @@ C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\refint\Newsle
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\NewsletterWebApp.pdb
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\NewsletterWebApp.genruntimeconfig.cache
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\ref\NewsletterWebApp.dll
-C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\SendGrid.dll
 C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\StarkbankEcdsa.dll
@@ -386,3 +385,4 @@ C:\Users\Hilori\RiderProjects\NewsletterWebApp\bin\Debug\net8.0\Quartz.Extension
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\bin\Debug\net8.0\Quartz.dll
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\bin\Debug\net8.0\Quartz.Extensions.DependencyInjection.dll
 C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\bin\Debug\net8.0\Quartz.Extensions.Hosting.dll
+C:\Users\uzytkownik\Source\Repos\NewsletterWebApp\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

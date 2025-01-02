@@ -35,6 +35,16 @@ namespace NewsletterWebApp.Data
                 .WithMany(e => e.EmailLogs)
                 .HasForeignKey(el => el.EmailId);
 
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.MailingList)
+                .WithMany(l => l.Subscriptions)
+                .HasForeignKey(s => s.MailingListId);
+
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Subscriptions)
+                .HasForeignKey(s => s.UserId);
+
             // Apply DateTime as UTC for all entities
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -57,7 +67,6 @@ namespace NewsletterWebApp.Data
 
             base.OnModelCreating(modelBuilder);
         }
-
 
         public DbSet<User> Users { get; set; }
         public DbSet<Click> Clicks { get; set; }

@@ -603,9 +603,13 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        //var mailingLists = _context.MailingLists.ToList();
+        var mailingLists = _context.MailingLists
+            .Select(l => new MailingListViewModel
+            {
+                Name = l.Name
+            })
+            .ToList();
 
-        //return View(mailingLists);
-        return View();
+        return View(mailingLists);
     }
 }

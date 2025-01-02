@@ -1,0 +1,15 @@
+﻿@model NewsletterWebApp.ViewModels.MailingListViewModel
+
+@{
+    ViewData["Title"] = "Usuń Listę Mailingową";
+}
+
+<div class="text-center">
+    <h2>Czy na pewno chcesz usunąć listę mailingową "@Model.Name"?</h2>
+</div>
+
+<form method="post" action="/Admin/DeleteMailingList">
+    <input type="hidden" id="id" name="id" value="@Model.Id" />
+    <button type="submit" class="me-2 btn btn-danger" id="confirm" name="confirm" value="true">Tak</button>
+    <button type="submit" class="me-2 btn btn-secondary" id="confirm" name="confirm" value="false">Nie</button>
+</form>

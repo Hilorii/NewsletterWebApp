@@ -676,7 +676,6 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        Console.WriteLine(id);
         var mailingList = _context.MailingLists.Single(l => l.Id == id);
 
         if (string.IsNullOrWhiteSpace(name))
@@ -692,6 +691,42 @@ public class AdminController : Controller
         _context.MailingLists.Update(mailingList);
         mailingList.Name = name;
         _context.SaveChanges();
+
+        return RedirectToAction("MailingLists", "Admin");
+    }
+
+    [AdminOnly]
+    public IActionResult DeleteMailingList(int id)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var mailingList = _context.MailingLists.Single(l => l.Id == id);
+
+        return View(new MailingListViewModel
+        {
+            Id = mailingList.Id,
+            Name = mailingList.Name
+        });
+    }
+
+    [AdminOnly]
+    [HttpPost]
+    public IActionResult DeleteMailingList(int id, bool confirm)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        if (confirm)
+        {
+            var mailingList = _context.MailingLists.Single(l => l.Id == id);
+            _context.MailingLists.Remove(mailingList);
+            _context.SaveChanges();
+        }
 
         return RedirectToAction("MailingLists", "Admin");
     }

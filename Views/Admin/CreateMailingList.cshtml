@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Stwórz Listę Mailingową";
+}
+
+<div class="text-center">
+    <h2>Stwórz Listę Mailingową</h2>
+</div>
+
+<form method="post" action="/Admin/CreateMailingList">
+    <div class="mb-3">
+        <label for="title" class="form-label">Nazwa:</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Podaj nazwę listy" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Stwórz</button>
+</form>
+
+<script src="~/js/load-tinymce.js" referrerpolicy="origin"></script>

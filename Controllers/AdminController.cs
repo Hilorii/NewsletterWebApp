@@ -612,4 +612,40 @@ public class AdminController : Controller
 
         return View(mailingLists);
     }
+
+    [AdminOnly]
+    public IActionResult CreateMailingList()
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        return View();
+    }
+
+    [AdminOnly]
+    [HttpPost]
+    public IActionResult CreateMailingList(string name)
+    {
+        if (!IsAdmin())
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            ModelState.AddModelError(string.Empty, "Nazwa listy jest wymagana.");
+            return View();
+        }
+
+        var mailingList = new MailingList
+        {
+            Name = name
+        };
+        _context.MailingLists.Add(mailingList);
+        _context.SaveChanges();
+
+        return RedirectToAction("MailingLists", "Admin");
+    }
 }

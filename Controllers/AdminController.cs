@@ -568,7 +568,7 @@ public class AdminController : Controller
             .ToList();
         return View(new NewsletterAndMailingListViewModel
         {
-            NewsletterModel = newsletterModel,
+            Newsletter = newsletterModel,
             MailingLists = mailingLists
         });
     }
@@ -604,7 +604,7 @@ public class AdminController : Controller
                 .ToList();
             return View(new NewsletterAndMailingListViewModel
             {
-                NewsletterModel = newsletterModel,
+                Newsletter = newsletterModel,
                 MailingLists = mailingLists
             });
         }

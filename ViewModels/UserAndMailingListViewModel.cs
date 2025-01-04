@@ -1,8 +1,8 @@
 ﻿namespace NewsletterWebApp.ViewModels
 {
-    public class NewsletterAndMailingListViewModel
+    public class UserAndMailingListViewModel
     {
-        public NewsletterViewModel Newsletter { get; set; }
+        public UserViewModel User { get; set; }
         public IEnumerable<MailingListViewModel> MailingLists { get; set; }
     }
 }

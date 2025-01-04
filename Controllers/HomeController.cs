@@ -10,13 +10,13 @@ namespace NewsletterWebApp.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly DataContext _context;
     private readonly ILogger<HomeController> _logger;
-    private readonly DataContext context;
 
     public HomeController(ILogger<HomeController> logger, DataContext context)
     {
         _logger = logger;
-        this.context = context;
+        _context = context;
     }
 
     public IActionResult Index()
@@ -26,22 +26,85 @@ public class HomeController : Controller
         
         if (email != null)
         {
-            var user = context.Users.FirstOrDefault(u => u.Email == email);
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
             if (user != null)
             {
                 // WYSYŁANIE DANYCH DO WIDOKU
-                return View(new UserViewModel
+
+                var userViewModel = new UserViewModel
                 {
                     Email = user.Email,
                     IsSubscribed = user.Subscribed,
+                    MailingListSubscriptionIds = _context.Subscriptions
+                        .Where(s => s.UserId == user.Id)
+                        .Select(s => s.MailingListId)
+                        .ToList(),
                     IsAdmin = user.Admin
+                };
+                var mailingLists = _context.MailingLists
+                    .Select(l => new MailingListViewModel
+                    {
+                        Id = l.Id,
+                        Name = l.Name
+                    })
+                    .ToList();
+
+                return View(new UserAndMailingListViewModel
+                {
+                    User = userViewModel,
+                    MailingLists = mailingLists
                 });
             }
         }
 
-        return View(new UserViewModel()); // pusty model
+        return View(new UserAndMailingListViewModel()); // pusty model
     }
 
+    // PRZYCISK NA SUBA
+    [HttpPost]
+    public IActionResult SubscribeToNewsletter(int id)
+    {
+        var email = HttpContext.Session.GetString("Email");
+
+        if (email != null)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            if (user != null)
+            {
+                var subscription = new Subscription
+                {
+                    UserId = user.Id,
+                    MailingListId = id
+                };
+                _context.Subscriptions.Add(subscription);
+                _context.SaveChanges();
+            }
+        }
+
+        return RedirectToAction("Index");
+    }
+
+    // PRZYCISK NA UNSUBA
+    [HttpPost]
+    public IActionResult UnsubscribeFromNewsletter(int id)
+    {
+        var email = HttpContext.Session.GetString("Email");
+
+        if (email != null)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            if (user != null)
+            {
+                var subscription = _context.Subscriptions.Single(s => s.UserId == user.Id && s.MailingListId == id);
+                _context.Subscriptions.Remove(subscription);
+                _context.SaveChanges();
+            }
+        }
+
+        return RedirectToAction("Index");
+    }
+
+    /*
     // PRZYCISK NA SUBA
     [HttpPost]
     public IActionResult SubscribeToNewsletter()
@@ -79,4 +142,5 @@ public class HomeController : Controller
 
         return RedirectToAction("Index");
     }
+    */
 }

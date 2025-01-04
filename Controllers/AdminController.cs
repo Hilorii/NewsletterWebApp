@@ -76,6 +76,16 @@ public class AdminController : Controller
 
             _context.Emails.Add(email);
             _context.SaveChanges();
+
+            foreach (var mailingListId in mailingListIds)
+            {
+                _context.EmailMailingLists.Add(new EmailMailingList
+                {
+                    EmailId = email.Id,
+                    MailingListId = mailingListId
+                });
+            }
+            _context.SaveChanges();
         }
 
         if (scheduled)

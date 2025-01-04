@@ -1,4 +1,4 @@
-﻿@model NewsletterWebApp.ViewModels.EmailViewModel
+﻿@model NewsletterWebApp.ViewModels.EmailAndMailingListViewModel
 
 @{
     ViewData["Title"] = "Wyślij Maila";
@@ -13,12 +13,12 @@
 <form method="post" action="/Admin/SendEmail">
     <div class="mb-3">
         <label for="title" class="form-label">Tytuł:</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Podaj tytuł wiadomości" value="@Model.Title" />
+        <input type="text" class="form-control" id="title" name="title" placeholder="Podaj tytuł wiadomości" value="@Model.Email.Title" />
     </div>
 
     <div class="mb-3">
         <label for="content" class="form-label">Treść wiadomości:</label>
-        <textarea class="form-control" id="content" name="content" style="width: 100%; height: 300px;">@Model.Content</textarea>
+        <textarea class="form-control" id="content" name="content" style="width: 100%; height: 300px;">@Model.Email.Content</textarea>
         <small class="form-text text-muted">
             Możesz użyć następujących zmiennych w treści maila:
             <ul>
@@ -27,12 +27,23 @@
         </small>
     </div>
 
-    <button type="submit" class="btn btn-primary">Wyślij</button>
+    <div class="mb-3">
+        Wybierz listy mailingowe:
+        @foreach (var mailingList in Model.MailingLists)
+        {
+            <div>
+                <input type="checkbox" id="mailingList@(mailingList.Id)" name="mailingListIds" value="@mailingList.Id" checked="@Model.Email.MailingListIds.Contains(mailingList.Id)" />
+                <label for="mailingList@(mailingList.Id)" class="form-label">@mailingList.Name</label>
+            </div>
+        }
+    </div>
 
     <div class="mb-3">
         <label for="scheduledAt" class="form-label">Zaplanowany czas wysyłki (opcjonalne):</label>
         <input type="datetime-local" class="form-control" id="scheduledAt" name="scheduledAt" />
     </div>
+
+    <button type="submit" class="btn btn-primary">Wyślij</button>
 </form>
 
 <script src="~/js/load-tinymce.js" referrerpolicy="origin"></script>

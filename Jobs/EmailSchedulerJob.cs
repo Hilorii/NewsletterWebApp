@@ -7,6 +7,7 @@ using NewsletterWebApp.Controllers;
 using Quartz;
 using NewsletterWebApp.Data;
 using NewsletterWebApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace NewsletterWebApp.Jobs
 {
@@ -27,6 +28,7 @@ namespace NewsletterWebApp.Jobs
             var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
 
             var emailsToSend = dbContext.Emails
+                .Include(e => e.EmailMailingLists)
                 .Where(e => e.ScheduledAt <= DateTime.UtcNow && e.IsScheduled)
                 .ToList();
 
@@ -48,7 +50,7 @@ namespace NewsletterWebApp.Jobs
                     // Call the existing method to send emails
                     var adminController = scope.ServiceProvider.GetRequiredService<AdminController>();
                     // await adminController.SendEmailsToUsersWithSendGridAsync(email.Title, email.Content, email.Id, users);
-                    await adminController.SendEmail(email.Title, email.Content, email.ScheduledAt, true, true);
+                    await adminController.SendEmail(email.Title, email.Content, email.ScheduledAt, true, email.EmailMailingLists.Select(eml => eml.MailingListId).ToArray(), true);
 
                     // email.IsScheduled = true;
                     // email.IsSent = false;

@@ -34,7 +34,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool scheduled, bool isAdminOverride = false)
+    public async Task<IActionResult> SendEmail(string title, string content, DateTime? scheduledAt, bool scheduled, int[] mailingListIds, bool isAdminOverride = false)
     {
         if (!isAdminOverride && !IsAdmin())
         {
@@ -83,7 +83,7 @@ public class AdminController : Controller
             if (scheduledAt.HasValue && scheduledAt <= DateTime.UtcNow)
             {
                 var users = _context.Users
-                    .Where(u => !u.Admin && u.Subscribed)
+                    .Where(u => !u.Admin && u.Subscriptions.Where(s => mailingListIds.Contains(s.MailingListId)).Count() > 0)
                     .ToList();
 
                 var emailLog = new EmailLog
@@ -125,7 +125,7 @@ public class AdminController : Controller
         else
         {
             var users = _context.Users
-                .Where(u => !u.Admin && u.Subscribed)
+                .Where(u => !u.Admin && u.Subscriptions.Where(s => mailingListIds.Contains(s.MailingListId)).Count() > 0)
                 .ToList();
 
             var emailLog = new EmailLog
@@ -371,12 +371,28 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        var email = _context.Emails.SingleOrDefault(n => n.Id == id);
+        var email = _context.Emails
+            .Include(e => e.EmailMailingLists)
+            .SingleOrDefault(n => n.Id == id);
 
-        return View(new EmailViewModel
+        var emailViewModel = new EmailViewModel
         {
             Title = email?.Title ?? "",
-            Content = email?.Content ?? ""
+            Content = email?.Content ?? "",
+            MailingListIds = email?.EmailMailingLists?.Select(eml => eml.MailingListId)?.ToList() ?? new List<int>()
+        };
+        var mailingLists = _context.MailingLists
+            .Select(ml => new MailingListViewModel
+            {
+                Id = ml.Id,
+                Name = ml.Name
+            })
+            .ToList();
+
+        return View(new EmailAndMailingListViewModel
+        {
+            Email = emailViewModel,
+            MailingLists = mailingLists
         });
     }
 

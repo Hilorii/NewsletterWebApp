@@ -12,5 +12,6 @@
         public DateTime ScheduledAt { get; set; }
         public int TotalClicks { get; set; }
         public int TotalOpens { get; set; }
+        public List<int> MailingListIds { get; set; }
     }
 }

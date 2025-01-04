@@ -16,7 +16,7 @@
             <span class="me-2 fw-bold">@counter.</span>
             <div class="flex-grow-1">
                 <div><strong>Tytuł:</strong> @email.Title</div>
-                <div><strong>Zaplanowano na:</strong> @email.ScheduledAt.ToString("yyyy-MM-dd HH:mm" ?? "Brak daty")</div>
+                <div><strong>Zaplanowano na:</strong> @(email.ScheduledAt.ToString("yyyy-MM-dd HH:mm") ?? "Brak daty")</div>
             </div>
             <form asp-action="DeletePlannedEmail" asp-route-id="@email.Id" method="post" class="ms-3" onsubmit="return confirm('Czy na pewno chcesz usunąć tego maila?');">
                 <button type="submit" class="btn btn-danger btn-sm">Usuń</button>

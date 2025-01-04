@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<NewsletterWebApp.ViewModels.MailingListViewModel>
+
+@{
     ViewData["Title"] = "Stwórz Newsletter";
 }
 
@@ -29,6 +31,17 @@
     @*     <label for="imageUrl">Obrazek:</label> *@
     @*     <input type="file" class="form-control" id="imageUrl" name="imageUrl" /> *@
     @* </div> *@
+
+    <div class="mb-3">
+        Wybierz listy mailingowe:
+        @foreach (var mailingList in Model)
+        {
+            <div>
+                <input type="checkbox" id="mailingList@(mailingList.Id)" name="mailingListIds" value="@mailingList.Id" />
+                <label for="mailingList@(mailingList.Id)" class="form-label">@mailingList.Name</label>
+            </div>
+        }
+    </div>
 
     <button type="submit" class="btn btn-primary">Stwórz</button>
 </form>

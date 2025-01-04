@@ -16,14 +16,14 @@ namespace NewsletterWebApp.Data
 
             // Relationships configuration
             modelBuilder.Entity<EmailLogUser>()
-                .HasOne(e => e.EmailLog)
+                .HasOne(elu => elu.EmailLog)
                 .WithMany(el => el.EmailLogUsers)
-                .HasForeignKey(e => e.EmailLogId);
+                .HasForeignKey(elu => elu.EmailLogId);
 
             modelBuilder.Entity<EmailLogUser>()
-                .HasOne(e => e.User)
+                .HasOne(elu => elu.User)
                 .WithMany(u => u.EmailLogUsers)
-                .HasForeignKey(e => e.UserId);
+                .HasForeignKey(elu => elu.UserId);
 
             modelBuilder.Entity<Click>()
                 .HasOne(c => c.EmailLog)
@@ -44,6 +44,16 @@ namespace NewsletterWebApp.Data
                 .HasOne(s => s.User)
                 .WithMany(u => u.Subscriptions)
                 .HasForeignKey(s => s.UserId);
+
+            modelBuilder.Entity<EmailMailingList>()
+                .HasOne(eml => eml.Email)
+                .WithMany(e => e.EmailMailingLists)
+                .HasForeignKey(eml => eml.EmailId);
+
+            modelBuilder.Entity<EmailMailingList>()
+                .HasOne(eml => eml.MailingList)
+                .WithMany(ml => ml.EmailMailingLists)
+                .HasForeignKey(eml => eml.MailingListId);
 
             // Apply DateTime as UTC for all entities
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -76,5 +86,6 @@ namespace NewsletterWebApp.Data
         public DbSet<EmailOpen> EmailOpens { get; set; }
         public DbSet<MailingList> MailingLists { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<EmailMailingList> EmailMailingLists { get; set; }
     }
 }

@@ -480,12 +480,20 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        return View();
+        var mailingLists = _context.MailingLists
+            .Select(ml => new MailingListViewModel
+            {
+                Id = ml.Id,
+                Name = ml.Name
+            })
+            .ToList();
+
+        return View(mailingLists);
     }
 
     [AdminOnly]
     [HttpPost]
-    public IActionResult CreateNewsletter(string title, string content, string? imageUrl)
+    public IActionResult CreateNewsletter(string title, string content, string? imageUrl, int[] mailingListIds)
     {
         if (!IsAdmin())
         {
@@ -495,7 +503,16 @@ public class AdminController : Controller
         if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
         {
             ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
-            return View();
+
+            var mailingLists = _context.MailingLists
+                .Select(ml => new MailingListViewModel
+                {
+                    Id = ml.Id,
+                    Name = ml.Name
+                })
+                .ToList();
+
+            return View(mailingLists);
         }
 
         var newsletter = new Email
@@ -506,6 +523,18 @@ public class AdminController : Controller
             IsNewsletter = true
         };
         _context.Emails.Add(newsletter);
+        _context.SaveChanges();
+
+        var newsletterId = newsletter.Id;
+        foreach (var mailingListId in mailingListIds)
+        {
+            var emailMailingList = new EmailMailingList
+            {
+                EmailId = newsletterId,
+                MailingListId = mailingListId
+            };
+            _context.EmailMailingLists.Add(emailMailingList);
+        }
         _context.SaveChanges();
 
         return RedirectToAction("NewslettersList", "Admin");
@@ -521,17 +550,30 @@ public class AdminController : Controller
 
         var newsletter = _context.Emails.Single(n => n.IsNewsletter && n.Id == id);
 
-        return View(new NewsletterViewModel
+        var newsletterModel = new NewsletterViewModel
         {
             Id = newsletter.Id,
             Title = newsletter.Title,
-            Content = newsletter.Content
+            Content = newsletter.Content,
+            MailingListIds = newsletter.EmailMailingLists.Select(eml => eml.MailingListId).ToList()
+        };
+        var mailingLists = _context.MailingLists
+            .Select(ml => new MailingListViewModel
+            {
+                Id = ml.Id,
+                Name = ml.Name
+            })
+            .ToList();
+        return View(new NewsletterAndMailingListViewModel
+        {
+            NewsletterModel = newsletterModel,
+            MailingLists = mailingLists
         });
     }
 
     [AdminOnly]
     [HttpPost]
-    public IActionResult EditNewsletter(int id, string title, string content, string? imageUrl)
+    public IActionResult EditNewsletter(int id, string title, string content, string? imageUrl, int[] mailingListIds)
     {
         if (!IsAdmin())
         {
@@ -543,11 +585,25 @@ public class AdminController : Controller
         if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
         {
             ModelState.AddModelError(string.Empty, "Tytuł i treść wiadomości są wymagane.");
-            return View(new NewsletterViewModel
+
+            var newsletterModel = new NewsletterViewModel
             {
                 Id = newsletter.Id,
                 Title = newsletter.Title,
-                Content = newsletter.Content
+                Content = newsletter.Content,
+                MailingListIds = newsletter.EmailMailingLists.Select(eml => eml.MailingListId).ToList()
+            };
+            var mailingLists = _context.MailingLists
+                .Select(ml => new MailingListViewModel
+                {
+                    Id = ml.Id,
+                    Name = ml.Name
+                })
+                .ToList();
+            return View(new NewsletterAndMailingListViewModel
+            {
+                NewsletterModel = newsletterModel,
+                MailingLists = mailingLists
             });
         }
 
@@ -555,6 +611,27 @@ public class AdminController : Controller
         newsletter.Title = title;
         newsletter.Content = content;
         newsletter.ImageUrl = imageUrl;
+
+        foreach (var mailingListId in mailingListIds)
+        {
+            var emailMailingList = new EmailMailingList
+            {
+                EmailId = id,
+                MailingListId = mailingListId
+            };
+            if (!_context.EmailMailingLists.Contains(emailMailingList))
+            {
+                _context.EmailMailingLists.Add(emailMailingList);
+            }
+        }
+        foreach (var emailMailingList in _context.EmailMailingLists.Where(eml => eml.EmailId == id))
+        {
+            if (!mailingListIds.ToList().Contains(emailMailingList.MailingListId))
+            {
+                _context.EmailMailingLists.Remove(emailMailingList);
+            }
+        }
+
         _context.SaveChanges();
 
         return RedirectToAction("NewslettersList", "Admin");

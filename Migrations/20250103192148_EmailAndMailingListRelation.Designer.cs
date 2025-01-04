@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsletterWebApp.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NewsletterWebApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250103192148_EmailAndMailingListRelation")]
+    partial class EmailAndMailingListRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasIndex("EmailLogId");
 
-                    b.ToTable("Clicks", (string)null);
+                    b.ToTable("Clicks");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.Email", b =>
@@ -88,7 +91,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Emails", (string)null);
+                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.EmailLog", b =>
@@ -109,7 +112,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasIndex("EmailId");
 
-                    b.ToTable("EmailLogs", (string)null);
+                    b.ToTable("EmailLogs");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.EmailLogUser", b =>
@@ -132,7 +135,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EmailLogUsers", (string)null);
+                    b.ToTable("EmailLogUsers");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.EmailMailingList", b =>
@@ -147,7 +150,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasIndex("MailingListId");
 
-                    b.ToTable("EmailMailingLists", (string)null);
+                    b.ToTable("EmailMailingLists");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.EmailOpen", b =>
@@ -168,7 +171,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasIndex("EmailLogId");
 
-                    b.ToTable("EmailOpens", (string)null);
+                    b.ToTable("EmailOpens");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.MailingList", b =>
@@ -185,7 +188,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MailingLists", (string)null);
+                    b.ToTable("MailingLists");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.Subscription", b =>
@@ -200,7 +203,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.User", b =>
@@ -230,7 +233,7 @@ namespace NewsletterWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("NewsletterWebApp.Data.Click", b =>

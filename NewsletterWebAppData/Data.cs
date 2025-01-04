@@ -75,15 +75,17 @@ namespace NewsletterWebApp.Data
 
         // Relacje
         public ICollection<EmailLog> EmailLogs { get; set; } = new List<EmailLog>(); // Jeden email może być logowany wiele razy
+        public ICollection<EmailMailingList> EmailMailingLists { get; set; } // Jeden email może być przypisany do wielu list mailingowych
     }
 
     public class MailingList
     {
-        public int Id { get; set; }
+        public int Id { get; set; } // Klucz główny
         public string Name { get; set; }
 
         // Relacje
         public ICollection<Subscription> Subscriptions { get; set; } // Jedna lista może mieć wiele subskrypcji
+        public ICollection<EmailMailingList> EmailMailingLists { get; set; } // Jedna lista może wieć wiele maili
     }
 
     [PrimaryKey(nameof(MailingListId), nameof(UserId))]
@@ -95,5 +97,16 @@ namespace NewsletterWebApp.Data
         // Relacje
         public MailingList MailingList { get; set; }
         public User User { get; set; }
+    }
+
+    [PrimaryKey(nameof(EmailId), nameof(MailingListId))]
+    public class EmailMailingList
+    {
+        public int EmailId { get; set; }
+        public int MailingListId { get; set; }
+
+        // Relacje
+        public Email Email { get; set; }
+        public MailingList MailingList { get; set; }
     }
 }

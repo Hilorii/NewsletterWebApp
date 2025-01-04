@@ -548,7 +548,9 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        var newsletter = _context.Emails.Single(n => n.IsNewsletter && n.Id == id);
+        var newsletter = _context.Emails
+            .Include(e => e.EmailMailingLists)
+            .Single(n => n.IsNewsletter && n.Id == id);
 
         var newsletterModel = new NewsletterViewModel
         {

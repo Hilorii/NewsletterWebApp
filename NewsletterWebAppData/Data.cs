@@ -88,9 +88,9 @@ namespace NewsletterWebApp.Data
         public ICollection<EmailMailingList> EmailMailingLists { get; set; } // Jedna lista może wieć wiele maili
     }
 
-    [PrimaryKey(nameof(MailingListId), nameof(UserId))]
     public class Subscription
     {
+        public int Id { get; set; } // Klucz główny
         public int MailingListId { get; set; }
         public int UserId { get; set; }
 
@@ -99,9 +99,9 @@ namespace NewsletterWebApp.Data
         public User User { get; set; }
     }
 
-    [PrimaryKey(nameof(EmailId), nameof(MailingListId))]
     public class EmailMailingList
     {
+        public int Id { get; set; } // Klucz główny
         public int EmailId { get; set; }
         public int MailingListId { get; set; }
 

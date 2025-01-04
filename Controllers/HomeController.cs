@@ -21,7 +21,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        //POBIERANIE DANYCH DLA WIDOKU
+        // POBIERANIE DANYCH DLA WIDOKU
         var email = HttpContext.Session.GetString("Email");
         
         if (email != null)
@@ -29,18 +29,20 @@ public class HomeController : Controller
             var user = context.Users.FirstOrDefault(u => u.Email == email);
             if (user != null)
             {
-                ViewBag.Email = email;
-                ViewBag.IsSubscribed = user.Subscribed;
-                ViewBag.IsAdmin = user.Admin;
+                // WYSYŁANIE DANYCH DO WIDOKU
+                return View(new UserViewModel
+                {
+                    Email = user.Email,
+                    IsSubscribed = user.Subscribed,
+                    IsAdmin = user.Admin
+                });
             }
         }
-        
-        //WYSYŁANIE DANYCH DO WIDOKU
-        ViewBag.Email = email;
-        
-        return View();
+
+        return View(new UserViewModel()); // pusty model
     }
-    //PRZYCISK NA SUBA
+
+    // PRZYCISK NA SUBA
     [HttpPost]
     public IActionResult SubscribeToNewsletter()
     {
@@ -58,7 +60,8 @@ public class HomeController : Controller
 
         return RedirectToAction("Index");
     }
-    //PRZYCISK NA UNSUBA
+
+    // PRZYCISK NA UNSUBA
     [HttpPost]
     public IActionResult UnsubscribeFromNewsletter()
     {
@@ -76,7 +79,4 @@ public class HomeController : Controller
 
         return RedirectToAction("Index");
     }
-    
-    
-    
 }

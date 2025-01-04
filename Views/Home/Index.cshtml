@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NewsletterWebApp.ViewModels.UserViewModel>
+﻿@model NewsletterWebApp.ViewModels.UserViewModel
 
 @{
     ViewData["Title"] = "Główna";
@@ -7,13 +7,13 @@
 <div class="text-center">
     <h1 class="display-4">Witaj!</h1>
 
-    @if (ViewBag.Email != null)
+    @if (Model.Email != null)
     {
-        <p class="lead">Twój e-mail: <strong>@ViewBag.Email</strong></p>
+        <p class="lead">Twój e-mail: <strong>@Model.Email</strong></p>
 
-        @if ((bool)ViewBag.IsAdmin == false)
+        @if (!Model.IsAdmin)
         {
-            @if ((bool)ViewBag.IsSubscribed == true)
+            @if (Model.IsSubscribed)
             {
                 <form method="post" asp-action="UnsubscribeFromNewsletter">
                     <button type="submit" class="btn btn-danger btn-lg">Wypisz się z newslettera</button>

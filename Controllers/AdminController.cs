@@ -188,6 +188,7 @@ public class AdminController : Controller
 
     public async Task SendEmailsToUsersWithSendGridAsync(string title, string content, int emailLogId, IEnumerable<User> users)
     {
+    //Yes I know it is public. If u want to use it then go on. Go and send some mails.
         var apiKey = "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";
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("hilori.furan@wp.pl", "MailCraft");
